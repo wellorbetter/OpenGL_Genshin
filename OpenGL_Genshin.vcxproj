@@ -129,57 +129,49 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\glad\src\glad.c" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyState.cpp" />
-    <ClCompile Include="EnemyStateMachine.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerAirState.cpp" />
-    <ClCompile Include="PlayerGroundedState.cpp" />
-    <ClCompile Include="PlayerIdelState.cpp" />
-    <ClCompile Include="PlayerJumpState.cpp" />
-    <ClCompile Include="PlayerMoveState.cpp" />
-    <ClCompile Include="PlayerSlideState.cpp" />
-    <ClCompile Include="PlayerState.cpp" />
-    <ClCompile Include="PlayerStateMachine.cpp" />
-    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\Enemy.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\EnemyState.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\EnemyStateMachine.cpp" />
+    <ClCompile Include="Src\Gensin\Entity\Entity.cpp" />
+    <ClCompile Include="Src\Gensin\Ground\Ground.cpp" />
+    <ClCompile Include="Src\Gensin\Player\Player.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerAirState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerGroundedState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerIdelState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerJumpState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerMoveState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerSlideState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerStateMachine.cpp" />
+    <ClCompile Include="Src\Lib\stb_image.cpp" />
+    <ClCompile Include="Src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\learnOpenGL\stb_image.h" />
-    <ClInclude Include="animation.h" />
-    <ClInclude Include="animator.h" />
-    <ClInclude Include="animdata.h" />
-    <ClInclude Include="assimp_glm_helpers.h" />
-    <ClInclude Include="bone.h" />
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="Cinemachine.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Ground.h" />
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="model_animation.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerAirState.h" />
-    <ClInclude Include="PlayerGroundedState.h" />
-    <ClInclude Include="PlayerIdleState.h" />
-    <ClInclude Include="PlayerJumpState.h" />
-    <ClInclude Include="PlayerMoveState.h" />
-    <ClInclude Include="PlayerSlideState.h" />
-    <ClInclude Include="PlayerState.h" />
-    <ClInclude Include="PlayerStateMachine.h" />
-    <ClInclude Include="shader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="anim_model.fs" />
-    <None Include="anim_model.vs" />
-    <None Include="ground.fs" />
-    <None Include="ground.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Ground.jpg" />
+    <ClInclude Include="Including\Gensin\App\Main.h" />
+    <ClInclude Include="Including\Gensin\Entity\Entity.h" />
+    <ClInclude Include="Including\Gensin\Ground\Ground.h" />
+    <ClInclude Include="Including\Gensin\Player\Player.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerAirState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerGroundedState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerIdleState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerJumpState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerMoveState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerSlideState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerStateMachine.h" />
+    <ClInclude Include="Including\Lib\stb_image.h" />
+    <ClInclude Include="Including\Utils\animation.h" />
+    <ClInclude Include="Including\Utils\animator.h" />
+    <ClInclude Include="Including\Utils\animdata.h" />
+    <ClInclude Include="Including\Utils\assimp_glm_helpers.h" />
+    <ClInclude Include="Including\Utils\bone.h" />
+    <ClInclude Include="Including\Utils\camera.h" />
+    <ClInclude Include="Including\Utils\Cinemachine.h" />
+    <ClInclude Include="Including\Utils\mesh.h" />
+    <ClInclude Include="Including\Utils\model.h" />
+    <ClInclude Include="Including\Utils\model_animation.h" />
+    <ClInclude Include="Including\Utils\shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

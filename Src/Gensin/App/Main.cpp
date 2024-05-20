@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "shader.h"
+#include "../Including/Utils/shader.h"
 #include "camera.h"
 #include "animator.h"
 #include "model_animation.h"

@@ -1,5 +1,5 @@
-#include "Ground.h"
-#include "stb_image.h"
+#include "../../../Including/Gensin/Ground/Ground.h"
+#include "../../../Including/Lib/stb_image.h"
 #include <iostream>
 
 Ground::Ground(const char* texturePath)
