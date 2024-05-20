@@ -27,9 +27,8 @@ void Entity::setDirection(glm::vec3& _direction)
 
 void Entity::setAnimation(string _stateName, bool _isActive)
 {
-	string modelPth = "Animation/babala/" + _stateName;
-	this->model = new Model(modelPth);
-	this->animation = new Animation(modelPth, model);
+	this->model = Animator::models[_stateName];
+	this->animation = Animator::animations[_stateName];
 	this->animator = new Animator(this->animation);
 }
 
@@ -43,10 +42,22 @@ glm::vec3 Entity::getPosition()
 	return this->position;
 }
 
+void Entity::UpdateAnimation(float deltaTime)
+{
+	this->animator->UpdateAnimation(deltaTime);
+}
+
+
 void Entity::Update() 
 {
 	
 }
+
+void Entity::Awake()
+{
+	
+}
+
 
 void Entity::Start()
 {

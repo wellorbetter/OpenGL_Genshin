@@ -1,12 +1,12 @@
 #pragma once
 #include "../Entity/Entity.h"
 #include "PlayerStateMachine.h"
-#include "PlayerSlideState.h"
+#include "PlayerIdleState.h"
 // 玩家类
 // 玩家类应当具有对应的状态管理
 class Player :public Entity {
 public:
-	PlayerIdelState* idleState;
+	PlayerIdleState* idleState;
 	PlayerStateMachine* stateMachine;
 
 	void Awake() override;

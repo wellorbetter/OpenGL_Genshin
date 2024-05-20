@@ -12,7 +12,7 @@
 #include "../Including/Utils/model_animation.h"
 #include "../Including/Gensin/Ground/Ground.h"
 #include "../Including/Utils/Cinemachine.h"
-
+#include "../Including/Gensin/Player/Player.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -86,10 +86,13 @@ int main()
     Shader groundShader("Resources/Shaders/ground.vs", "Resources/Shaders/ground.fs");
 
     // load models
-    Model ourModel("Animation/Babala/Idle/Idle.dae");
+    /*Model ourModel("Animation/Babala/Idle/Idle.dae");
     Animation danceAnimation("Animation/Babala/Idle/Idle.dae", &ourModel);
-    Animator animator(&danceAnimation);
+    Animator animator(&danceAnimation);*/
 
+    Player* player = new Player();
+    player->Awake();
+    player->Start();
     // 创建地面对象
     ground = new Ground("Resources/Textures/Ground.jpg");
 
@@ -104,10 +107,14 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        player->Update();
         // input
         processInput(window);
-        animator.UpdateAnimation(deltaTime);
 
+        player->animator->UpdateAnimation(deltaTime);
+        // animator.UpdateAnimation(deltaTime);
+        // 算了还是之后再完善封装
+        // player->UpdateAnimation(deltaTime);
         // render
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -120,8 +127,8 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
-
-        auto transforms = animator.GetFinalBoneMatrices();
+        // auto transforms = animator.GetFinalBoneMatrices();
+        auto transforms = player->animator->GetFinalBoneMatrices();
         for (int i = 0; i < transforms.size(); ++i)
             ourShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
 
@@ -131,7 +138,8 @@ int main()
         model = glm::translate(model, characterPosition);
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
         ourShader.setMat4("model", model);
-        ourModel.Draw(ourShader);
+        // ourModel.Draw(ourShader);
+        player->model->Draw(ourShader);
 
         // render the ground
         ground->Draw(groundShader, view, projection);

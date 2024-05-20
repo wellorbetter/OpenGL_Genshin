@@ -8,7 +8,9 @@
 // 首先应该具有速度，位置，动画等属性
 class Entity:public GameObject {
 public:
-	Entity();
+	Animator* animator;
+	Model* model;
+
 
 	// getter setter
 	glm::vec3 getVelocity();
@@ -22,7 +24,8 @@ public:
 	glm::vec3 getPosition();
 	void setPosition(glm::vec3& _position);
 
-
+	// 需要给Animator设置update
+	void UpdateAnimation(float deltaTime);
 
 	// 给出模型dae的地址，直接设置对应的模型和动画
 	// 算了直接给出状态名更加贴切
@@ -36,7 +39,7 @@ public:
 	void Destroy() override;
 private:
 	// 模型 给出模型地址然后加载
-	Model* model;
+	
 	
 	// 当前播放的动画
 	Animation* animation;
@@ -56,5 +59,5 @@ private:
 	// Animator 就应该初始化所有的动画
 	// 然后通过static来直接访问
 	// 通过设置布尔值来决定当前状态
-	Animator* animator;
+	
 };

@@ -16,11 +16,11 @@ class Animator
 public:
     // 所有的动画
     static std::map<string, Animation*> animations;
-
+    static std::map<string, Model*> models;
     static void Init()
     {
         // 读取所有的动画 Animation 目录下所有的文件夹
-        std::filesystem::path animationPath("Animation");
+        std::filesystem::path animationPath("Animation/Babala");
 
         if (std::filesystem::exists(animationPath) && std::filesystem::is_directory(animationPath))
         {
@@ -30,11 +30,16 @@ public:
                 {
                     std::string path = entry.path().string();
                     std::string name = entry.path().filename().string();
+
+                    // 替换路径中的反斜杠为正斜杠
+                    std::replace(path.begin(), path.end(), '\\', '/');
+
                     // 加载模型
                     std::string modelPath = path + "/" + name + ".dae";
                     // 加载动画
                     Model* model = new Model(modelPath);
                     Animation* animation = new Animation(modelPath, model);
+                    models[name] = model;
                     animations[name] = animation;
                 }
             }
@@ -44,6 +49,7 @@ public:
             std::cout << "Animation folder not found" << std::endl;
         }
     }
+
 
     Animator(Animation* animation)
     {

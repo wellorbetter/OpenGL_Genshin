@@ -129,6 +129,9 @@
     <ClCompile Include="Src\Gensin\GameObject\GameObject.cpp">
       <Filter>源文件\Genshin\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Utils\Animator.cpp">
+      <Filter>源文件\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Including\Utils\animation.h">

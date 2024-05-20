@@ -9,6 +9,9 @@ class PlayerState {
 public:
 	virtual void Enter() = 0;
 	virtual void Exit() = 0;
+
+	// 一般在某个状态的时候检查输入 切换状态
+	virtual void Update() = 0;
 protected:
 	// 状态名 
 	// 可以在Animation\babala\stateName
