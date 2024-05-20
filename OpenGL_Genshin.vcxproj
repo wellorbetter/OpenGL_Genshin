@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +134,7 @@
     <ClCompile Include="Src\Gensin\Enemy\EnemyState.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyStateMachine.cpp" />
     <ClCompile Include="Src\Gensin\Entity\Entity.cpp" />
+    <ClCompile Include="Src\Gensin\GameObject\GameObject.cpp" />
     <ClCompile Include="Src\Gensin\Ground\Ground.cpp" />
     <ClCompile Include="Src\Gensin\Player\Player.cpp" />
     <ClCompile Include="Src\Gensin\Player\PlayerAirState.cpp" />
@@ -150,6 +152,7 @@
     <ClInclude Include="..\learnOpenGL\stb_image.h" />
     <ClInclude Include="Including\Gensin\App\Main.h" />
     <ClInclude Include="Including\Gensin\Entity\Entity.h" />
+    <ClInclude Include="Including\Gensin\GameObject\GameObject.h" />
     <ClInclude Include="Including\Gensin\Ground\Ground.h" />
     <ClInclude Include="Including\Gensin\Player\Player.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerAirState.h" />

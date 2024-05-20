@@ -1,4 +1,5 @@
 #include "../../../Including/Gensin/Player/PlayerIdleState.h"
+#include "../../../Including/Gensin/Player/Player.h"
 
 void PlayerIdelState::Enter()
 {
@@ -7,5 +8,5 @@ void PlayerIdelState::Enter()
 
 void PlayerIdelState::Exit()
 {
-
+	player->setAnimation("Idle", false);
 }

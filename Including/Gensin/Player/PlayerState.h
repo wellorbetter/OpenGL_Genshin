@@ -1,8 +1,9 @@
 #pragma once
 
+
 #include <string>
-#include "Player.h"
-#include "PlayerStateMachine.h"
+class Player;
+class PlayerStateMachine;
 
 class PlayerState {
 public:
@@ -21,5 +22,5 @@ protected:
 	PlayerStateMachine* stateMachine;
 
 	// 初始化构造函数
-	PlayerState(Player* _player, PlayerStateMachine* _stateMachine, string _stateName);
+	PlayerState(Player* _player, PlayerStateMachine* _stateMachine, std::string _stateName);
 };

@@ -2,7 +2,7 @@
 
 #include "PlayerState.h"
 
-class PlayerIdelState:PlayerState {
+class PlayerIdelState:public PlayerState {
 public:
 	void Enter() override;
 	void Exit() override;

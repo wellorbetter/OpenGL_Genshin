@@ -67,6 +67,12 @@
     <Filter Include="源文件\Genshin\App">
       <UniqueIdentifier>{71428eaa-2c5f-4f63-9c4f-1ff7a5f2adbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Genshin\GameObject">
+      <UniqueIdentifier>{3d049b89-1bb1-483b-b04b-4d70af67eb40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin\GameObject">
+      <UniqueIdentifier>{c68cdfe5-3e0d-4452-8126-bda126d58fc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\glad\src\glad.c">
@@ -119,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Src\Gensin\Ground\Ground.cpp">
       <Filter>源文件\Genshin\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Gensin\GameObject\GameObject.cpp">
+      <Filter>源文件\Genshin\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="Including\Gensin\App\Main.h">
       <Filter>头文件\Genshin\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\GameObject\GameObject.h">
+      <Filter>头文件\Genshin\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
