@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\Utils">
+      <UniqueIdentifier>{a1e84dcc-22ec-4852-a926-dce0982bdc10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Lib">
+      <UniqueIdentifier>{9a066759-0bf4-4f56-a895-3d5e383626c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin">
+      <UniqueIdentifier>{10a372bc-6b81-41ca-bee0-115d7cb4e8a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin\Player">
+      <UniqueIdentifier>{d8fea6fd-0884-468d-84ce-15a63d5ca168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin\Ground">
+      <UniqueIdentifier>{822e5467-647f-40cb-891d-cd7364e8e60a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin\Enemy">
+      <UniqueIdentifier>{c03f5f41-3f9a-43a5-a2a7-5cc75c0d34a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Lib">
+      <UniqueIdentifier>{d79b735e-a809-41a9-8d6d-c9fd9438859b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Genshin">
+      <UniqueIdentifier>{2f5e013b-08f5-41e3-a586-53935868fe09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils">
+      <UniqueIdentifier>{52bee0f0-e4bc-4796-ae7e-2273a58fcc4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\Shaders">
+      <UniqueIdentifier>{80ccd276-fdb8-44d6-bec6-f07bea5716b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Genshin\Ground">
+      <UniqueIdentifier>{eba3bcb8-6b44-42a0-8eef-af11c3064176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Genshin\Enemy">
+      <UniqueIdentifier>{16fdcf05-f271-4dce-aa27-828588e65bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Genshin\Player">
+      <UniqueIdentifier>{02a7bf83-d61a-4b9b-9322-7198ee648c45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin\Entity">
+      <UniqueIdentifier>{b574bdb4-ec80-4fea-8309-1f8f49919be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Genshin\Entity">
+      <UniqueIdentifier>{a16cc9a1-cc39-470d-9400-89483943d9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Genshin\APP">
+      <UniqueIdentifier>{71428eaa-2c5f-4f63-9c4f-1ff7a5f2adbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Genshin\APP">
+      <UniqueIdentifier>{f3728ffa-02ab-4db3-8a38-33e7f5636970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\Textures">
+      <UniqueIdentifier>{5c60fb92-ad88-47f5-bd7b-a0172b2a2205}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\glad\src\glad.c">
+      <Filter>源文件\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStateMachine.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAirState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdelState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSlideState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStateMachine.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>源文件\Genshin\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGroundedState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>源文件\Genshin\APP</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>源文件\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>源文件\Genshin\Ground</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Entity.h">
+      <Filter>头文件\Genshin\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStateMachine.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGroundedState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAirState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSlideState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>头文件\Genshin\APP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\learnOpenGL\stb_image.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="model_animation.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="bone.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp_glm_helpers.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="animdata.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="animator.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>头文件\Genshin\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Cinemachine.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="anim_model.vs">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="anim_model.fs">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="ground.vs">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="ground.fs">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Ground.jpg">
+      <Filter>资源文件\Textures</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
