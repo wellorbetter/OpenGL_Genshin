@@ -3,6 +3,7 @@
 #include "PlayerStateMachine.h"
 #include "PlayerMoveState.h"
 #include "PlayerIdleState.h"
+#include "PlayerJumpState.h"
 #include "../../Utils/Cinemachine.h"
 // 玩家类
 // 玩家类应当具有对应的状态管理
@@ -11,6 +12,8 @@ public:
 	PlayerIdleState* idleState;
 	PlayerStateMachine* stateMachine;
 	PlayerMoveState* moveState;
+	PlayerJumpState* jumpState;
+
 	Player(Cinemachine* _cinemachine);
 
 	bool isMoving = false;

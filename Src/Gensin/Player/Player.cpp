@@ -11,6 +11,7 @@ void Player::Awake()
 	this->stateMachine = new PlayerStateMachine();
 	this->idleState = new PlayerIdleState(this, this->stateMachine, "Idle");
 	this->moveState = new PlayerMoveState(this, this->stateMachine, "Move");
+	this->jumpState = new PlayerJumpState(this, this->stateMachine, "Jump");
 }
 
 void Player::Start()
@@ -67,11 +68,7 @@ void Player::Update(GLFWwindow* window, float deltaTime)
 	}
 
 	// 状态的更新
-	stateMachine->currentState->Update(window);
-
-	// 位置的更新 这里不用 * this->getDirection() 因为速度包括了方向，之前乘过了
-	glm::vec3 newPosition = deltaTime * this->getVelocity() + this->getPosition();
-	this->setPosition(newPosition);
+	stateMachine->currentState->Update(window, deltaTime);
 }
 
 Player::Player(Cinemachine* _cinemachine):Entity()

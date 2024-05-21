@@ -23,6 +23,8 @@ public:
 
 	// 一般在某个状态的时候检查输入 切换状态
 	virtual void Update(GLFWwindow* window) = 0;
+
+	virtual void Update(GLFWwindow* window, float deltaTime) = 0;
 	// 状态名 
 	// 可以在Animation\babala\stateName
 	// 下面找到对应的模型文件

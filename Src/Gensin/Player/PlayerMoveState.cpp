@@ -17,8 +17,15 @@ void PlayerMoveState::Enter()
 
 void PlayerMoveState::Update(GLFWwindow* window)
 {
-	// 在移动
-	moveUpdate(this, this, window);
+	
+}
+
+
+void PlayerMoveState::Update(GLFWwindow* window, float deltaTime)
+{
+	this->Update(window);
+	
+	moveUpdate(this, this, window, deltaTime);
 }
 
 void changeDir(Player* player, MoveDirection moveDirection)
@@ -42,8 +49,14 @@ void changeDir(Player* player, MoveDirection moveDirection)
 	player->setDirection(newDirection);
 }
 
-void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window)
+void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window, float deltaTime)
 {
+	// 先看看可以不用进跳跃
+	// 因为后面必然会进入某一个状态，要么移动要么idle
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		nowState->stateMachine->ChangeState(nowState->player->jumpState);
+	}
 	MoveDirection moveDirection = state->getMoveDirection(window);
 	if (moveDirection != MoveDirection::NONE)
 	{
@@ -59,7 +72,10 @@ void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window
 		state->player->setVelocity(newVelocity, "2D");
 
 		printf("%lf %lf %lf\n", state->player->getPosition().x, state->player->getPosition().y, state->player->getPosition().z);
-
+		
+		// 位置的更新 这里不用 * this->getDirection() 因为速度包括了方向，之前乘过了
+		glm::vec3 newPosition = deltaTime * state->player->getVelocity() + state->player->getPosition();
+		state->player->setPosition(newPosition);
 
 		switch (moveDirection)
 		{

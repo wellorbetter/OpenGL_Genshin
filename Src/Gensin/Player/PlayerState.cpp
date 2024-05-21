@@ -12,6 +12,12 @@ void PlayerState::Update(GLFWwindow* window)
 {
 	
 }
+
+void PlayerState::Update(GLFWwindow* window, float deltaTime)
+{
+
+}
+
 void PlayerState::Enter()
 {
 	player->setAnimation(this->stateName, true);

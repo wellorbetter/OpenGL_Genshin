@@ -10,6 +10,7 @@ class PlayerMoveState : public PlayerState
 {
 public:
 	void Update(GLFWwindow* window) override;
+	void Update(GLFWwindow* window, float deltaTime) override;
 	void Enter() override;
 	PlayerFrontMoveState* frontState;
 	PlayerBackMoveState* backState;
@@ -18,7 +19,7 @@ public:
 	PlayerMoveState(Player* _player, PlayerStateMachine* _stateMachine, std::string _stateName);
 };
 
-void moveUpdate(PlayerState* nowState, PlayerMoveState* state, GLFWwindow* window);
+void moveUpdate(PlayerState* nowState, PlayerMoveState* state, GLFWwindow* window, float deltaTime);
 
 void changeDir(Player* player, MoveDirection moveDirection);
 
@@ -31,7 +32,12 @@ public:
 		moveState = _moveState;
 	}
 	void Update(GLFWwindow* window) override {
-		moveUpdate(this, moveState, window);
+		
+	}
+	void Update(GLFWwindow* window, float deltaTime) override
+	{
+		this->Update(window);
+		moveUpdate(this, moveState, window, deltaTime);
 	}
 };
 
@@ -44,7 +50,12 @@ public:
 		moveState = _moveState;
 	}
 	void Update(GLFWwindow* window) override {
-		moveUpdate(this, moveState, window);
+
+	}
+	void Update(GLFWwindow* window, float deltaTime) override
+	{
+		this->Update(window);
+		moveUpdate(this, moveState, window, deltaTime);
 	}
 };
 
@@ -57,7 +68,12 @@ public:
 		moveState = _moveState;
 	}
 	void Update(GLFWwindow* window) override {
-		moveUpdate(this, moveState, window);
+
+	}
+	void Update(GLFWwindow* window, float deltaTime) override
+	{
+		this->Update(window);
+		moveUpdate(this, moveState, window, deltaTime);
 	}
 };
 
@@ -70,6 +86,11 @@ public:
 		moveState = _moveState;
 	}
 	void Update(GLFWwindow* window) override {
-		moveUpdate(this, moveState, window);
+
+	}
+	void Update(GLFWwindow* window, float deltaTime) override
+	{
+		this->Update(window);
+		moveUpdate(this, moveState, window, deltaTime);
 	}
 };
