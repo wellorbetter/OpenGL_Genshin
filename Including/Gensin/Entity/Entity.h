@@ -30,6 +30,9 @@ public:
 	// 需要给Animator设置update
 	void UpdateAnimation(float deltaTime);
 
+	// 移动
+	void move(glm::vec2 _direction, float deltaTime);
+
 	// 给出模型dae的地址，直接设置对应的模型和动画
 	// 算了直接给出状态名更加贴切
 	// 这里我实际上不是很懂，它们两个是一起设置的
@@ -38,7 +41,6 @@ public:
 	void Update(GLFWwindow* window) override;
 	void Awake() override;
 	void Start() override;
-
 	void Destroy() override;
 private:
 	// 模型 给出模型地址然后加载

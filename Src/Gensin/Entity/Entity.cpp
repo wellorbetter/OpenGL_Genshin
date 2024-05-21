@@ -60,6 +60,8 @@ void Entity::UpdateAnimation(float deltaTime)
 
 void Entity::Update(GLFWwindow* window)
 {
+	// 实体这里是不能设置速度这些的，因为这些东西只有在具体的状态下面才会有
+	// 实体可能会拥有这些状态，但是并不一定处于这些状态
 	
 }
 

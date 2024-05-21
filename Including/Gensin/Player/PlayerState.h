@@ -1,5 +1,5 @@
 #pragma once
-
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
 class Player;
@@ -7,8 +7,8 @@ class PlayerStateMachine;
 
 class PlayerState {
 public:
-	virtual void Enter() = 0;
-	virtual void Exit() = 0;
+	virtual void Enter();
+	virtual void Exit();
 
 	// 一般在某个状态的时候检查输入 切换状态
 	virtual void Update(GLFWwindow* window) = 0;

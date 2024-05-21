@@ -6,12 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-#include "../Including/Utils/shader.h"
-#include "../Including/Utils/camera.h"
-#include "../Including/Utils/animator.h"
-#include "../Including/Utils/model_animation.h"
 #include "../Including/Gensin/Ground/Ground.h"
-#include "../Including/Utils/Cinemachine.h"
 #include "../Including/Gensin/Player/Player.h"
 #include <iostream>
 
@@ -89,15 +84,15 @@ int main()
     /*Model ourModel("Animation/Babala/Idle/Idle.dae");
     Animation danceAnimation("Animation/Babala/Idle/Idle.dae", &ourModel);
     Animator animator(&danceAnimation);*/
-
-    Player* player = new Player();
+    // 创建 Cinemachine 对象
+    cinemachine = new Cinemachine(&camera);
+    Player* player = new Player(cinemachine);
     player->Awake();
     player->Start();
     // 创建地面对象
     ground = new Ground("Resources/Textures/Ground.jpg");
 
-    // 创建 Cinemachine 对象
-    cinemachine = new Cinemachine(&camera);
+    
 
     // render loop
     while (!glfwWindowShouldClose(window))
@@ -107,9 +102,9 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        player->Update(window);
+        player->Update(window, deltaTime);
         // input
-        processInput(window);
+        /*processInput(window);*/
 
         player->animator->UpdateAnimation(deltaTime);
         // animator.UpdateAnimation(deltaTime);
