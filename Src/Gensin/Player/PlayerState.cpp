@@ -21,3 +21,29 @@ void PlayerState::Exit()
 {
 	player->setAnimation(this->stateName, false);
 }
+MoveDirection PlayerState::getMoveDirection(GLFWwindow* window)
+{
+	MoveDirection moveDirection = MoveDirection::NONE;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS
+		|| glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		moveDirection = MoveDirection::FRONT;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS
+		|| glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		moveDirection = MoveDirection::BACK;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS
+		|| glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		moveDirection = MoveDirection::LEFT;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS
+		|| glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		moveDirection = MoveDirection::RIGHT;
+	}
+	return moveDirection;
+
+}

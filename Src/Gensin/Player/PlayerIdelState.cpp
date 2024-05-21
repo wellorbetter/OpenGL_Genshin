@@ -11,14 +11,7 @@ void PlayerIdleState::Update(GLFWwindow* window)
 	__super::Update(window);
 
 	// ÔÚÒÆ¶¯
-	if (   glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS 
-		|| glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS
-		|| glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS
-		|| glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS
-		|| glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS
-		|| glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS
-		|| glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS
-		|| glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	if (this->getMoveDirection(window) != MoveDirection::NONE)
 	{
 		player->isMoving = true;
 		stateMachine->ChangeState(player->moveState);

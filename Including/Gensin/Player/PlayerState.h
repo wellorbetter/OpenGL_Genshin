@@ -5,14 +5,24 @@
 class Player;
 class PlayerStateMachine;
 
+enum class MoveDirection
+{
+	FRONT,
+	BACK,
+	LEFT,
+	RIGHT,
+	NONE
+};
+
 class PlayerState {
 public:
+	MoveDirection getMoveDirection(GLFWwindow* window);
+
 	virtual void Enter();
 	virtual void Exit();
 
 	// 一般在某个状态的时候检查输入 切换状态
 	virtual void Update(GLFWwindow* window) = 0;
-protected:
 	// 状态名 
 	// 可以在Animation\babala\stateName
 	// 下面找到对应的模型文件
