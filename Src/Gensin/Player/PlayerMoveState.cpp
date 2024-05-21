@@ -27,16 +27,16 @@ void changeDir(Player* player, MoveDirection moveDirection)
 	switch (moveDirection)
 	{
 	case MoveDirection::FRONT:
-		newDirection = (glm::vec3(0, 0, 1));
-		break;
-	case MoveDirection::BACK:
 		newDirection = (glm::vec3(0, 0, -1));
 		break;
+	case MoveDirection::BACK:
+		newDirection = (glm::vec3(0, 0, 1));
+		break;
 	case MoveDirection::LEFT:
-		newDirection = (glm::vec3(1, 0, 0));
+		newDirection = (glm::vec3(-1, 0, 0));
 		break;
 	case MoveDirection::RIGHT:
-		newDirection = (glm::vec3(-1, 0, 0));
+		newDirection = (glm::vec3(1, 0, 0));
 		break;
 	}
 	player->setDirection(newDirection);
@@ -58,8 +58,6 @@ void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window
 		glm::vec3 newVelocity = state->player->getDirection() * state->player->getSpeed();
 		state->player->setVelocity(newVelocity, "2D");
 
-		printf("%lf %lf %lf\n", state->player->getDirection().x, state->player->getDirection().y, state->player->getDirection().z);
-		printf("%lf %lf %lf\n", state->player->getSpeed().x, state->player->getSpeed().y, state->player->getSpeed().z);
 		printf("%lf %lf %lf\n", state->player->getPosition().x, state->player->getPosition().y, state->player->getPosition().z);
 
 

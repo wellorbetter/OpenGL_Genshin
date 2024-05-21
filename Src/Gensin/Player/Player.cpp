@@ -26,20 +26,33 @@ void Player::Update(GLFWwindow* window)
 {
 	__super::Update(window);
 	// 退出游戏
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		cinemachine->SwitchCamera(); // 切换相机
+
 	stateMachine->currentState->Update(window);
 }
 
 void Player::Update(GLFWwindow* window, float deltaTime)
 {
 	this->Update(window);
-
+	this->cinemachine->switchTimer -= deltaTime;
 	// 相机的移动 只有上帝视角可以移动
+
+	// 这里有问题的，因为每次的update非常非常短，这里的deltaTime是一个很小的数
+	// 所以可能我按下了c键但是update已经执行了好几次了
+	// 所以切换相机需要一个内置时间 比如1秒
+
+	// 切换相机
+	if ((glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) && this->cinemachine->switchTimer < 0)
+	{
+		cinemachine->SwitchCamera();
+		this->cinemachine->switchTimer = this->cinemachine->switchTime;
+	}
+	// 如果是上帝视角角色不准动
 	if (this->cinemachine->activeCameraIndex == 2)
 	{
+		stateMachine->ChangeState(this->idleState);
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 			cinemachine->ProcessKeyboard(FORWARD, deltaTime);
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -48,6 +61,9 @@ void Player::Update(GLFWwindow* window, float deltaTime)
 			cinemachine->ProcessKeyboard(LEFT, deltaTime);
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 			cinemachine->ProcessKeyboard(RIGHT, deltaTime);
+		// 同时不准进行更新
+		
+		return;
 	}
 
 	// 状态的更新

@@ -20,7 +20,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(0.0f, 2.0f, 5.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -127,11 +127,12 @@ int main()
         for (int i = 0; i < transforms.size(); ++i)
             ourShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
 
-        printf("%lf %lf %lf\n", player->getPosition().x, player->getPosition().y, player->getPosition().z);
-        // render the loaded model
+      // render the loaded model
         glm::vec3 characterPosition = player->getPosition(); // 角色的位置
+
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, characterPosition);
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // 旋转180度
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
         ourShader.setMat4("model", model);
         // ourModel.Draw(ourShader);
