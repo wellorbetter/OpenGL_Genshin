@@ -11,5 +11,5 @@ public:
 
 	void Awake() override;
 	void Start() override;
-	void Update() override;
+	void Update(GLFWwindow* window) override;
 };

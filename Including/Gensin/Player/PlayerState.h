@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <GLFW/glfw3.h>
 #include <string>
 class Player;
 class PlayerStateMachine;
@@ -11,7 +11,7 @@ public:
 	virtual void Exit() = 0;
 
 	// 一般在某个状态的时候检查输入 切换状态
-	virtual void Update() = 0;
+	virtual void Update(GLFWwindow* window) = 0;
 protected:
 	// 状态名 
 	// 可以在Animation\babala\stateName

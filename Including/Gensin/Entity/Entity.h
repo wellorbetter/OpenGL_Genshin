@@ -12,6 +12,9 @@ public:
 	Model* model;
 
 
+	void setSpeed(glm::vec3& _speed);
+	glm::vec3 getSpeed();
+
 	// getter setter
 	glm::vec3 getVelocity();
 	void setVelocity(glm::vec3& _velocity);
@@ -32,7 +35,7 @@ public:
 	// 这里我实际上不是很懂，它们两个是一起设置的
 	// 骨骼模型的材质和动画绑定在一起
 	void setAnimation(string _stateName, bool _isActive);
-	void Update() override;
+	void Update(GLFWwindow* window) override;
 	void Awake() override;
 	void Start() override;
 
@@ -44,7 +47,10 @@ private:
 	// 当前播放的动画
 	Animation* animation;
 
-	// 速度
+	// 应当具有的各方向速度
+	glm::vec3 speed;
+
+	// 实际速度
 	glm::vec3 velocity;
 	
 	// 方向

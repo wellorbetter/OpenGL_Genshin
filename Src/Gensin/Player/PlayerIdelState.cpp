@@ -13,8 +13,9 @@ void PlayerIdleState::Exit()
 
 
 
-void PlayerIdleState::Update()
+void PlayerIdleState::Update(GLFWwindow* window)
 {
 	// 检查输入
 	// 或许可以用processInput(GLFWwindow* window)函数
+
 }

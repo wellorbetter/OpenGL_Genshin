@@ -107,7 +107,7 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        player->Update();
+        player->Update(window);
         // input
         processInput(window);
 

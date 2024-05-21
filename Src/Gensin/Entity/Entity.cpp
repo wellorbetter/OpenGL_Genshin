@@ -1,5 +1,15 @@
 #include "../../../Including/Gensin/Entity/Entity.h"
 
+void Entity::setSpeed(glm::vec3& _speed)
+{
+	this->speed = _speed;
+}
+
+glm::vec3 Entity::getSpeed()
+{
+	return this->speed;
+}
+
 glm::vec3 Entity::getVelocity()
 {
 	return this->velocity;
@@ -48,7 +58,7 @@ void Entity::UpdateAnimation(float deltaTime)
 }
 
 
-void Entity::Update() 
+void Entity::Update(GLFWwindow* window)
 {
 	
 }

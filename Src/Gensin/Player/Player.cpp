@@ -18,8 +18,8 @@ void Player::Start()
 	this->stateMachine->InitialState(this->idleState);
 }
 
-void Player::Update()
+void Player::Update(GLFWwindow* window)
 {
-	__super::Update();
-	stateMachine->currentState->Update();
+	__super::Update(window);
+	stateMachine->currentState->Update(window);
 }
