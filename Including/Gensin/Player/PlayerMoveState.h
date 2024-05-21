@@ -20,6 +20,8 @@ public:
 
 void moveUpdate(PlayerState* nowState, PlayerMoveState* state, GLFWwindow* window);
 
+void changeDir(Player* player, MoveDirection moveDirection);
+
 class PlayerFrontMoveState :public PlayerState {
 public:
 	PlayerMoveState* moveState;

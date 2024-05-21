@@ -47,6 +47,7 @@ public:
 
     void SwitchCamera() {
         activeCameraIndex = (activeCameraIndex + 1) % virtualCameras.size();
+
     }
 
     void Update(const glm::vec3& targetPosition) {

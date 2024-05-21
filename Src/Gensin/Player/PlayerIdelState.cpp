@@ -2,7 +2,12 @@
 #include "../../../Including/Gensin/Player/Player.h"
 
 
-
+void PlayerIdleState::Enter()
+{
+	__super::Enter();
+	// 闲置状态没有速度
+	player->zeroVelocity();
+}
 
 void PlayerIdleState::Update(GLFWwindow* window)
 {

@@ -11,13 +11,16 @@ public:
 	Animator* animator;
 	Model* model;
 
+	Entity();
 
 	void setSpeed(glm::vec3& _speed);
 	glm::vec3 getSpeed();
 
 	// getter setter
 	glm::vec3 getVelocity();
+	void setVelocity(glm::vec3& _velocity, std::string type);
 	void setVelocity(glm::vec3& _velocity);
+	void setVelocity(glm::vec2& _velocity);
 	void zeroVelocity();
 
 	glm::vec3 getDirection();
@@ -26,7 +29,7 @@ public:
 
 	glm::vec3 getPosition();
 	void setPosition(glm::vec3& _position);
-
+	void setPosition(glm::vec2& _position);
 	// 需要给Animator设置update
 	void UpdateAnimation(float deltaTime);
 

@@ -18,17 +18,28 @@ void PlayerMoveState::Enter()
 void PlayerMoveState::Update(GLFWwindow* window)
 {
 	// 在移动
-	MoveDirection moveDirection = this->getMoveDirection(window);
-	if (moveDirection != MoveDirection::NONE)
+	moveUpdate(this, this, window);
+}
+
+void changeDir(Player* player, MoveDirection moveDirection)
+{
+	glm::vec3 newDirection;
+	switch (moveDirection)
 	{
-		player->isMoving = true;
-		player->stateMachine->ChangeState(this->frontState);
-	} // 没有移动
-	else
-	{
-		player->isMoving = false;
-		stateMachine->ChangeState(player->idleState);
+	case MoveDirection::FRONT:
+		newDirection = (glm::vec3(0, 0, 1));
+		break;
+	case MoveDirection::BACK:
+		newDirection = (glm::vec3(0, 0, -1));
+		break;
+	case MoveDirection::LEFT:
+		newDirection = (glm::vec3(1, 0, 0));
+		break;
+	case MoveDirection::RIGHT:
+		newDirection = (glm::vec3(-1, 0, 0));
+		break;
 	}
+	player->setDirection(newDirection);
 }
 
 void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window)
@@ -36,7 +47,22 @@ void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window
 	MoveDirection moveDirection = state->getMoveDirection(window);
 	if (moveDirection != MoveDirection::NONE)
 	{
+		// 移动只能在地上移动，所以这个时候速度只能是xy平面的
+		// 很好，搞错了，原来这个z轴是面朝我的
+		// y轴是上下的  x轴是左右的
+		// 走路的平面是xz平面
 		state->player->isMoving = true;
+
+		// 修改朝向 因为根据第一人称的朝向来修改的话，其他视角就会有bug
+		changeDir(state->player, moveDirection);
+		glm::vec3 newVelocity = state->player->getDirection() * state->player->getSpeed();
+		state->player->setVelocity(newVelocity, "2D");
+
+		printf("%lf %lf %lf\n", state->player->getDirection().x, state->player->getDirection().y, state->player->getDirection().z);
+		printf("%lf %lf %lf\n", state->player->getSpeed().x, state->player->getSpeed().y, state->player->getSpeed().z);
+		printf("%lf %lf %lf\n", state->player->getPosition().x, state->player->getPosition().y, state->player->getPosition().z);
+
+
 		switch (moveDirection)
 		{
 			// 不会从自己到自己

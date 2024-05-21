@@ -1,5 +1,16 @@
 #include "../../../Including/Gensin/Entity/Entity.h"
 
+Entity::Entity()
+{
+	this->position = glm::vec3(0.0f);
+	this->speed = glm::vec3(0.0f);
+	this->velocity = glm::vec3(0.0f);
+	this->direction = glm::vec3(0.0f);
+	this->model = nullptr;
+	this->animation = nullptr;
+	this->animator = nullptr;
+}
+
 void Entity::setSpeed(glm::vec3& _speed)
 {
 	this->speed = _speed;
@@ -15,10 +26,30 @@ glm::vec3 Entity::getVelocity()
 	return this->velocity;
 }
 
+void Entity::setVelocity(glm::vec3& _velocity, std::string type)
+{
+	glm::vec2 newVelocity;
+	if (type == "2D")
+	{
+		newVelocity = glm::vec2(_velocity.x, _velocity.z);
+		this->setVelocity(newVelocity);
+	}
+	else
+	{
+		this->setVelocity(_velocity);
+	}
+}
+
 void Entity::setVelocity(glm::vec3& _velocity)
 {
 	this->velocity = _velocity;
 }
+
+void Entity::setVelocity(glm::vec2& _velocity)
+{
+	this->velocity = glm::vec3(_velocity.x, 0, _velocity.y);
+}
+
 
 void Entity::zeroVelocity()
 {
@@ -45,6 +76,12 @@ void Entity::setAnimation(string _stateName, bool _isActive)
 void Entity::setPosition(glm::vec3& _position)
 {
 	this->position = _position;
+}
+
+void Entity::setPosition(glm::vec2& _position)
+{
+	glm::vec3 newPosition = glm::vec3(_position.x, 0, _position.y);
+	this->position = newPosition;
 }
 
 glm::vec3 Entity::getPosition()
