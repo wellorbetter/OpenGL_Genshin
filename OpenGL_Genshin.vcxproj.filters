@@ -135,6 +135,18 @@
     <ClCompile Include="Src\Utils\Cinemachine.cpp">
       <Filter>源文件\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Gensin\Player\PlayerAttackState.cpp">
+      <Filter>源文件\Genshin\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Gensin\Enemy\EnemyAttackState.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Gensin\Enemy\EnemyMoveState.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Gensin\Enemy\EnemyIdleState.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Including\Utils\animation.h">
@@ -212,11 +224,42 @@
     <ClInclude Include="Including\Gensin\GameObject\GameObject.h">
       <Filter>头文件\Genshin\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Including\Lib\FastNoiseLite.h">
-      <Filter>头文件\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="Including\Lib\stb_image.h">
       <Filter>头文件\Lib</Filter>
     </ClInclude>
+    <ClInclude Include="Including\Gensin\Player\PlayerAttackState.h">
+      <Filter>头文件\Genshin\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\Enemy.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\EnemyState.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\EnemyStateMachine.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\EnemyMoveState.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\EnemyAttackState.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\EnemyIdleState.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\ground.jpg">
+      <Filter>资源文件\Textures</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\ground.fs">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\ground.vs">
+      <Filter>资源文件\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -17,10 +17,18 @@ public:
     // 所有的动画
     static std::map<string, Animation*> animations;
     static std::map<string, Model*> models;
+
     static void Init()
     {
+        vector<string> path = { "Animation/Babala", "Animation/WeirdQiuqiuren" };
         // 读取所有的动画 Animation 目录下所有的文件夹
-        std::filesystem::path animationPath("Animation/Babala");
+        for (auto& p : path)
+            InitAnimation(p);
+    }
+
+    static void InitAnimation(string path)
+    {
+        std::filesystem::path animationPath(path);
 
         if (std::filesystem::exists(animationPath) && std::filesystem::is_directory(animationPath))
         {
@@ -39,8 +47,8 @@ public:
                     // 加载动画
                     Model* model = new Model(modelPath);
                     Animation* animation = new Animation(modelPath, model);
-                    models[name] = model;
-                    animations[name] = animation;
+                    models[modelPath] = model;
+                    animations[modelPath] = animation;
                 }
             }
         }

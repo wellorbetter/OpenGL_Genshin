@@ -6,11 +6,13 @@
 #include "../GameObject/GameObject.h"
 // 实体类
 // 首先应该具有速度，位置，动画等属性
-class Entity:public GameObject {
+class Entity:public GameObject, public Collider {
 public:
 	Animator* animator;
 	Model* model;
-
+	std::string modelPath;
+	glm::vec3 position;
+	float HP;
 	Entity();
 
 	void setSpeed(glm::vec3& _speed);
@@ -30,6 +32,7 @@ public:
 	glm::vec3 getPosition();
 	void setPosition(glm::vec3& _position);
 	void setPosition(glm::vec2& _position);
+	void setColliderPosition(glm::vec3& _position);
 	// 需要给Animator设置update
 	void UpdateAnimation(float deltaTime);
 
@@ -45,6 +48,7 @@ public:
 	void Awake() override;
 	void Start() override;
 	void Destroy() override;
+	virtual void Damage();
 private:
 	// 模型 给出模型地址然后加载
 	
@@ -62,7 +66,7 @@ private:
 	glm::vec3 direction;
 
 	// 位置 这里本该是Transform的，但是这个游戏比较简单，就只用得到position
-	glm::vec3 position;
+	
 
 	// 当前的移动速度
 

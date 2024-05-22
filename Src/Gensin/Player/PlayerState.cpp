@@ -6,6 +6,7 @@ PlayerState::PlayerState(Player* _player, PlayerStateMachine* _stateMachine, std
 	player = _player;
 	stateMachine = _stateMachine;
 	stateName = _stateName;
+	attackCDTimer = attackCDTime;
 }
 
 void PlayerState::Update(GLFWwindow* window)

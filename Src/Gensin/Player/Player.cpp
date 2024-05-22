@@ -6,12 +6,12 @@ void Player::Awake()
 {
 	// 初始化动画 setAnim直接拿
 	// 创建某些状态 加载东西
-	
-	Animator::Init();
+	modelPath = "Animation/Babala/";
 	this->stateMachine = new PlayerStateMachine();
 	this->idleState = new PlayerIdleState(this, this->stateMachine, "Idle");
 	this->moveState = new PlayerMoveState(this, this->stateMachine, "Move");
 	this->jumpState = new PlayerJumpState(this, this->stateMachine, "Jump");
+	this->attackState = new PlayerAttackState(this, this->stateMachine, "Attack");
 }
 
 void Player::Start()
@@ -30,8 +30,6 @@ void Player::Update(GLFWwindow* window)
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
-	stateMachine->currentState->Update(window);
 }
 
 void Player::Update(GLFWwindow* window, float deltaTime)
@@ -84,7 +82,33 @@ void Player::Update(GLFWwindow* window, float deltaTime)
 Player::Player(Cinemachine* _cinemachine):Entity()
 {
 	this->cinemachine = _cinemachine;
-	// 拿到相机的第一人称的位置 以及朝向
+	// 拿到相机的第一人称的位置 以及朝向 同时修改了碰撞体的位置
 	this->setPosition(this->cinemachine->virtualCameras[1].camera->Position);
 	this->setDirection(this->cinemachine->virtualCameras[1].camera->Front);
+}
+
+void Player::Damage()
+{
+	__super::Damage();
+	// 受伤就响一下受伤音效，然后白光闪两下
+	// 白光就是model的材质变成白色，然后再变回来
+	// 材质这好像不太好改，算了，就搞个音效之后
+}
+
+
+// 发出子弹 长度为len的射线检测碰撞
+void Player::fireBullet(float len)
+{
+	// 方向为camera.Front
+	glm::vec3 direction = this->cinemachine->virtualCameras[1].camera->Front;
+	for (int i = 0; i < 10; i++)
+	{
+		// 生成一个子弹 这里有问题
+		Bullet* bullet = new Bullet(this->getPosition(), direction, 0.1);
+		// 检测碰撞
+		if (bullet->collisionCheck(this))
+		{
+			this->Damage();
+		}
+	}
 }

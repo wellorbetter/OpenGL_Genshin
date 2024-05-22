@@ -20,7 +20,6 @@ void PlayerIdleState::Update(GLFWwindow* window)
 	{
 		stateMachine->ChangeState(player->jumpState);
 	}
-
 	// ÔÚÒÆ¶¯
 	if (this->getMoveDirection(window) != MoveDirection::NONE)
 	{
@@ -32,5 +31,11 @@ void PlayerIdleState::Update(GLFWwindow* window)
 
 void PlayerIdleState::Update(GLFWwindow* window, float deltaTime)
 {
+	attackCDTimer -= deltaTime;
 	this->Update(window);
+	if (attackCDTimer < 0 && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		attackCDTimer = attackCDTime;
+		stateMachine->ChangeState(player->attackState);
+	}
 }

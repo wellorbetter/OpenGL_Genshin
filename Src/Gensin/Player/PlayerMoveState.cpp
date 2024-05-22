@@ -17,14 +17,15 @@ void PlayerMoveState::Enter()
 
 void PlayerMoveState::Update(GLFWwindow* window)
 {
-	
+    
 }
 
 
 void PlayerMoveState::Update(GLFWwindow* window, float deltaTime)
 {
 	this->Update(window);
-	
+    attackCDTimer -= deltaTime;
+    
 	moveUpdate(this, this, window, deltaTime);
 }
 
@@ -122,7 +123,16 @@ void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window
     }
     else
     {
-        state->player->isMoving = false;
-        state->stateMachine->ChangeState(state->player->idleState);
+        // 不然就看看是不是在攻击
+        if (state->attackCDTimer < 0 && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+        {
+            state->attackCDTimer = state->attackCDTime;
+            state->stateMachine->ChangeState(state->player->attackState);
+        }
+        else 
+        {
+            state->player->isMoving = false;
+            state->stateMachine->ChangeState(state->player->idleState);
+        }
     }
 }

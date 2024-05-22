@@ -131,6 +131,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\glad\src\glad.c" />
     <ClCompile Include="Src\Gensin\Enemy\Enemy.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\EnemyAttackState.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\EnemyIdleState.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\EnemyMoveState.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyState.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyStateMachine.cpp" />
     <ClCompile Include="Src\Gensin\Entity\Entity.cpp" />
@@ -138,6 +141,7 @@
     <ClCompile Include="Src\Gensin\Ground\Ground.cpp" />
     <ClCompile Include="Src\Gensin\Player\Player.cpp" />
     <ClCompile Include="Src\Gensin\Player\PlayerAirState.cpp" />
+    <ClCompile Include="Src\Gensin\Player\PlayerAttackState.cpp" />
     <ClCompile Include="Src\Gensin\Player\PlayerGroundedState.cpp" />
     <ClCompile Include="Src\Gensin\Player\PlayerIdelState.cpp" />
     <ClCompile Include="Src\Gensin\Player\PlayerJumpState.cpp" />
@@ -153,11 +157,18 @@
   <ItemGroup>
     <ClInclude Include="..\learnOpenGL\stb_image.h" />
     <ClInclude Include="Including\Gensin\App\Main.h" />
+    <ClInclude Include="Including\Gensin\Enemy\Enemy.h" />
+    <ClInclude Include="Including\Gensin\Enemy\EnemyAttackState.h" />
+    <ClInclude Include="Including\Gensin\Enemy\EnemyIdleState.h" />
+    <ClInclude Include="Including\Gensin\Enemy\EnemyMoveState.h" />
+    <ClInclude Include="Including\Gensin\Enemy\EnemyState.h" />
+    <ClInclude Include="Including\Gensin\Enemy\EnemyStateMachine.h" />
     <ClInclude Include="Including\Gensin\Entity\Entity.h" />
     <ClInclude Include="Including\Gensin\GameObject\GameObject.h" />
     <ClInclude Include="Including\Gensin\Ground\Ground.h" />
     <ClInclude Include="Including\Gensin\Player\Player.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerAirState.h" />
+    <ClInclude Include="Including\Gensin\Player\PlayerAttackState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerGroundedState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerIdleState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerJumpState.h" />
@@ -165,7 +176,6 @@
     <ClInclude Include="Including\Gensin\Player\PlayerSlideState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerStateMachine.h" />
-    <ClInclude Include="Including\Lib\FastNoiseLite.h" />
     <ClInclude Include="Including\Lib\stb_image.h" />
     <ClInclude Include="Including\Utils\animation.h" />
     <ClInclude Include="Including\Utils\animator.h" />
@@ -178,6 +188,13 @@
     <ClInclude Include="Including\Utils\model.h" />
     <ClInclude Include="Including\Utils\model_animation.h" />
     <ClInclude Include="Including\Utils\shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\ground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\ground.fs" />
+    <None Include="Resources\Shaders\ground.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

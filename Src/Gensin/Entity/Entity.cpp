@@ -1,6 +1,7 @@
 #include "../../../Including/Gensin/Entity/Entity.h"
 
 Entity::Entity()
+	:GameObject(), Collider()
 {
 	this->position = glm::vec3(0.0f);
 	this->speed = glm::vec3(0.0f);
@@ -9,6 +10,7 @@ Entity::Entity()
 	this->model = nullptr;
 	this->animation = nullptr;
 	this->animator = nullptr;
+	this->HP = 3;
 }
 
 void Entity::setSpeed(glm::vec3& _speed)
@@ -68,15 +70,28 @@ void Entity::setDirection(glm::vec3& _direction)
 
 void Entity::setAnimation(string _stateName, bool _isActive)
 {
-	this->model = Animator::models[_stateName];
-	this->animation = Animator::animations[_stateName];
+	// modelPath + _stateName 检测是否正确
+	string _path = modelPath + _stateName + "/" + _stateName + ".dae";
+	this->model = Animator::models[_path];
+	this->animation = Animator::animations[_path];
 	this->animator = new Animator(this->animation);
 }
 
 void Entity::setPosition(glm::vec3& _position)
 {
 	this->position = _position;
+	// 更新位置的时候也要更新碰撞体的位置
+	this->setColliderPosition(_position);
 }
+
+void Entity::setColliderPosition(glm::vec3& _position)
+{
+	// 当前中心点就是position的位置，以它为中心长为boxLength的盒子即可
+	this->colliderCenter = _position;
+	this->leftDown = glm::vec3(_position.x - this->boxLength / 2, _position.y - this->boxLength / 2, _position.z - this->boxLength / 2);
+	this->rightUp = glm::vec3(_position.x + this->boxLength / 2, _position.y + this->boxLength / 2, _position.z + this->boxLength / 2);
+}
+
 
 void Entity::setPosition(glm::vec2& _position)
 {
@@ -119,4 +134,10 @@ void Entity::Destroy()
 	delete this->model;
 	delete this->animation;
 	delete this->animator;
+}
+
+void Entity::Damage()
+{
+	// 伤害
+	this->HP -= 1;
 }
