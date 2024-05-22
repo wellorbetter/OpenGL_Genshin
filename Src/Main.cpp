@@ -92,7 +92,7 @@ int main()
     player->Awake();
     player->Start();
     // 创建地面对象
-    ground = new Ground("Resources/Textures/Ground.jpg");
+    ground = new Ground("Resources/Textures/ground.jpg");
 
     
 
