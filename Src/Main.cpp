@@ -132,7 +132,7 @@ int main()
         // 创建模型矩阵并更新位置和旋转
         glm::vec3 characterPosition = player->getPosition();
         glm::vec3 playerDirection = player->getDirection();
-        glm::vec3 initialDirection = glm::vec3(0.0f, 0.0f, -1.0f); // 初始朝向
+        glm::vec3 initialDirection = glm::vec3(0.0f, 0.0f, -1.0f); // 初始朝向 相机也是这个初始朝向
 
         // 计算旋转四元数
         glm::quat rotationQuat = glm::rotation(initialDirection, playerDirection);

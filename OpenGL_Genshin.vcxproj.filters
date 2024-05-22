@@ -132,6 +132,9 @@
     <ClCompile Include="Src\Utils\Animator.cpp">
       <Filter>源文件\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Utils\Cinemachine.cpp">
+      <Filter>源文件\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Including\Utils\animation.h">

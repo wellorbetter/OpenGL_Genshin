@@ -148,6 +148,7 @@
     <ClCompile Include="Src\Lib\stb_image.cpp" />
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\Utils\Animator.cpp" />
+    <ClCompile Include="Src\Utils\Cinemachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\learnOpenGL\stb_image.h" />

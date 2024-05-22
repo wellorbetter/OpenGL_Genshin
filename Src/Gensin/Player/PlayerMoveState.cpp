@@ -49,6 +49,8 @@ void changeDir(Player* player, MoveDirection moveDirection)
 	player->setDirection(newDirection);
 }
 
+
+// 实际上就是根据相机对应的方向来修改玩家的朝向，方向自然是要基于当前视角来更新才对
 void changeDirBasedOnCamera(Player* player, Camera* camera, MoveDirection moveDirection)
 {
     glm::vec3 newDirection;
@@ -70,6 +72,7 @@ void changeDirBasedOnCamera(Player* player, Camera* camera, MoveDirection moveDi
         newDirection = player->getDirection();
         break;
     }
+    // 拿到相机方向之后只需要xz平面的方向就可以了 只需要朝向嘛
     newDirection = glm::normalize(glm::vec3(newDirection.x, 0.0f, newDirection.z));
     player->setDirection(newDirection);
 }
@@ -83,7 +86,8 @@ void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window
     {
         nowState->stateMachine->ChangeState(nowState->player->jumpState);
     }
-
+    //Camera* camera = state->player->cinemachine->virtualCameras[1].camera;
+    //std::cout << camera->Front.x << " " << camera->Front.y << " " << camera->Front.z << std::endl;
     MoveDirection moveDirection = state->getMoveDirection(window);
     if (moveDirection != MoveDirection::NONE)
     {
