@@ -42,7 +42,7 @@ public:
         // 默认添加一个第三人称相机和一个第一人称相机
         // 0 1 2 ---- 3 1 上
         virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 2.0f, 2.0f))); // 第三人称
-        virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 1.0f, 1.0f))); // 第一人称
+        virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, .15f, 0.0f))); // 第一人称
         virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 0.0f, 0.0f), true)); // 上帝视角
     }
 

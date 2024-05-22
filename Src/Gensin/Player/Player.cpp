@@ -63,7 +63,7 @@ void Player::Update(GLFWwindow* window, float deltaTime)
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 			cinemachine->ProcessKeyboard(RIGHT, deltaTime);
 		// 同时不准进行更新
-		
+		//printf("%lf %lf %lf\n", this->getDirection().x, this->getDirection().y, this->getDirection().z);
 		return;
 	}
 

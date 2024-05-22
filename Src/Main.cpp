@@ -5,6 +5,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "../Including/Gensin/Ground/Ground.h"
 #include "../Including/Gensin/Player/Player.h"
@@ -102,52 +104,62 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // 更新玩家状态
         player->Update(window, deltaTime);
-        // input
-        /*processInput(window);*/
-
         player->animator->UpdateAnimation(deltaTime);
-        // animator.UpdateAnimation(deltaTime);
-        // 算了还是之后再完善封装
-        // player->UpdateAnimation(deltaTime);
-        // render
+
+        // 清除缓冲区
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // don't forget to enable shader before setting uniforms
+        // 启用着色器
         ourShader.use();
 
-        // view/projection transformations
+        // 设置视图和投影矩阵
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
-        // auto transforms = animator.GetFinalBoneMatrices();
+
+        // 获取骨骼矩阵并设置到着色器
         auto transforms = player->animator->GetFinalBoneMatrices();
         for (int i = 0; i < transforms.size(); ++i)
+        {
             ourShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+        }
 
-      // render the loaded model
-        glm::vec3 characterPosition = player->getPosition(); // 角色的位置
+        // 渲染模型
+        // 创建模型矩阵并更新位置和旋转
+        glm::vec3 characterPosition = player->getPosition();
+        glm::vec3 playerDirection = player->getDirection();
+        glm::vec3 initialDirection = glm::vec3(0.0f, 0.0f, -1.0f); // 初始朝向
+
+        // 计算旋转四元数
+        glm::quat rotationQuat = glm::rotation(initialDirection, playerDirection);
 
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, characterPosition);
-        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f)); // 旋转180度
+        // 翻转坐标系 因为开始的时候这个模型是面对着我的
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = model * glm::toMat4(rotationQuat); // 应用四元数旋转
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
         ourShader.setMat4("model", model);
-        // ourModel.Draw(ourShader);
+
+        // 绘制模型
         player->model->Draw(ourShader);
 
-        // render the ground
+
+        // 渲染地面
         ground->Draw(groundShader, view, projection);
 
         // 更新相机位置
         cinemachine->Update(characterPosition);
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // 交换缓冲区并处理事件
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     glfwTerminate();

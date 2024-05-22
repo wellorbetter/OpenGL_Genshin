@@ -23,6 +23,6 @@ public:
 	void Update(GLFWwindow* window) override;
 	void Update(GLFWwindow* window, float deltaTime);
 	// 需要有一个第一人称视角的方向位置
-private:
+
 	Cinemachine* cinemachine;
 };

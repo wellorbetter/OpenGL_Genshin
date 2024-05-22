@@ -49,59 +49,76 @@ void changeDir(Player* player, MoveDirection moveDirection)
 	player->setDirection(newDirection);
 }
 
+void changeDirBasedOnCamera(Player* player, Camera* camera, MoveDirection moveDirection)
+{
+    glm::vec3 newDirection;
+    switch (moveDirection)
+    {
+    case MoveDirection::FRONT:
+        newDirection = camera->Front;
+        break;
+    case MoveDirection::BACK:
+        newDirection = -camera->Front;
+        break;
+    case MoveDirection::LEFT:
+        newDirection = -camera->Right;
+        break;
+    case MoveDirection::RIGHT:
+        newDirection = camera->Right;
+        break;
+    default:
+        newDirection = player->getDirection();
+        break;
+    }
+    newDirection = glm::normalize(glm::vec3(newDirection.x, 0.0f, newDirection.z));
+    player->setDirection(newDirection);
+}
+
+
 void moveUpdate(PlayerState* nowState,PlayerMoveState* state, GLFWwindow* window, float deltaTime)
 {
 	// 先看看可以不用进跳跃
 	// 因为后面必然会进入某一个状态，要么移动要么idle
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-	{
-		nowState->stateMachine->ChangeState(nowState->player->jumpState);
-	}
-	MoveDirection moveDirection = state->getMoveDirection(window);
-	if (moveDirection != MoveDirection::NONE)
-	{
-		// 移动只能在地上移动，所以这个时候速度只能是xy平面的
-		// 很好，搞错了，原来这个z轴是面朝我的
-		// y轴是上下的  x轴是左右的
-		// 走路的平面是xz平面
-		state->player->isMoving = true;
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        nowState->stateMachine->ChangeState(nowState->player->jumpState);
+    }
 
-		// 修改朝向 因为根据第一人称的朝向来修改的话，其他视角就会有bug
-		changeDir(state->player, moveDirection);
-		glm::vec3 newVelocity = state->player->getDirection() * state->player->getSpeed();
-		state->player->setVelocity(newVelocity, "2D");
+    MoveDirection moveDirection = state->getMoveDirection(window);
+    if (moveDirection != MoveDirection::NONE)
+    {
+        state->player->isMoving = true;
 
-		printf("%lf %lf %lf\n", state->player->getPosition().x, state->player->getPosition().y, state->player->getPosition().z);
-		
-		// 位置的更新 这里不用 * this->getDirection() 因为速度包括了方向，之前乘过了
-		glm::vec3 newPosition = deltaTime * state->player->getVelocity() + state->player->getPosition();
-		state->player->setPosition(newPosition);
+        // 根据相机视角修改玩家朝向
+        changeDirBasedOnCamera(state->player, state->player->cinemachine->virtualCameras[1].camera, moveDirection);
 
-		switch (moveDirection)
-		{
-			// 不会从自己到自己
-		case MoveDirection::FRONT:
-			if (nowState->stateName != "Front")
-				state->stateMachine->ChangeState(state->frontState);
-			break;
-		case MoveDirection::BACK:
-			if (nowState->stateName != "Back")
-				state->stateMachine->ChangeState(state->backState);
-			break;
-		case MoveDirection::LEFT:
-			if (nowState->stateName != "Left")
-				state->stateMachine->ChangeState(state->leftState);
-			break;
-		case MoveDirection::RIGHT:
-			if (nowState->stateName != "Right")
-				state->stateMachine->ChangeState(state->rightState);
-			break;
-		}
-	} // 没有移动
-	else
-	{
-		state->player->isMoving = false;
-		state->stateMachine->ChangeState(state->player->idleState);
+        glm::vec3 newVelocity = state->player->getDirection() * state->player->getSpeed();
+        state->player->setVelocity(newVelocity, "2D");
 
-	}
+        glm::vec3 newPosition = deltaTime * state->player->getVelocity() + state->player->getPosition();
+        state->player->setPosition(newPosition);
+
+        // 更新状态
+        if (moveDirection == MoveDirection::FRONT && nowState->stateName != "Front")
+        {
+            state->stateMachine->ChangeState(state->frontState);
+        }
+        else if (moveDirection == MoveDirection::BACK && nowState->stateName != "Back")
+        {
+            state->stateMachine->ChangeState(state->backState);
+        }
+        else if (moveDirection == MoveDirection::LEFT && nowState->stateName != "Left")
+        {
+            state->stateMachine->ChangeState(state->leftState);
+        }
+        else if (moveDirection == MoveDirection::RIGHT && nowState->stateName != "Right")
+        {
+            state->stateMachine->ChangeState(state->rightState);
+        }
+    }
+    else
+    {
+        state->player->isMoving = false;
+        state->stateMachine->ChangeState(state->player->idleState);
+    }
 }
