@@ -165,6 +165,7 @@
     <ClInclude Include="Including\Gensin\Player\PlayerSlideState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerState.h" />
     <ClInclude Include="Including\Gensin\Player\PlayerStateMachine.h" />
+    <ClInclude Include="Including\Lib\FastNoiseLite.h" />
     <ClInclude Include="Including\Lib\stb_image.h" />
     <ClInclude Include="Including\Utils\animation.h" />
     <ClInclude Include="Including\Utils\animator.h" />

@@ -9,10 +9,12 @@ public:
     glm::vec3 offset;
     Camera* camera;
     bool isFreeCamera;
+    // 更新不平滑，fixed更新可能会好点
 
+    float updateTime = .02f, updateTimer;
     VirtualCamera(Camera* cam, const glm::vec3& offset, bool isFree = false);
 
-    void UpdatePosition(const glm::vec3& targetPosition);
+    void UpdatePosition(const glm::vec3& targetPosition, float deltaTime);
 
     void ProcessKeyboard(Camera_Movement direction, float deltaTime);
 };
@@ -30,7 +32,7 @@ public:
 
     void SwitchCamera();
 
-    void Update(const glm::vec3& targetPosition);
+    void Update(const glm::vec3& targetPosition, float deltaTime);
 
     void ProcessKeyboard(Camera_Movement direction, float deltaTime);
 };

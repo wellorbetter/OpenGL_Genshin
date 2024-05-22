@@ -1,13 +1,31 @@
 #include "../../Including/Utils/Cinemachine.h"
 
+#include "../../Including/Lib/stb_image.h"
 #include <iostream>
 
 VirtualCamera::VirtualCamera(Camera* cam, const glm::vec3& offset, bool isFree)
-    : camera(cam), offset(offset), isFreeCamera(isFree) {}
+    : camera(cam), offset(offset), isFreeCamera(isFree) {
+    updateTimer = updateTime;
+}
 
-void VirtualCamera::UpdatePosition(const glm::vec3& targetPosition) {
+void VirtualCamera::UpdatePosition(const glm::vec3& targetPosition, float deltaTime) {
+    updateTimer -= deltaTime;
     if (!isFreeCamera) {
-        camera->Position = targetPosition + offset;
+        updateTimer = updateTime;
+
+        // 线性插值参数
+        float interpFactor = 0.2f; // 调整这个参数以控制插值速度
+
+        // 计算当前位置到目标位置的向量
+        glm::vec3 currentPos = camera->Position;
+        glm::vec3 bacOffset = glm::vec3(-camera->Front.x, 0.0f, -camera->Front.z);
+        glm::vec3 targetPos = targetPosition + offset + glm::normalize(bacOffset) * .3f;
+        glm::vec3 direction = targetPos - currentPos;
+
+        // 进行插值
+        glm::vec3 interpolatedPos = currentPos + interpFactor * direction;
+
+        camera->Position = interpolatedPos;
         camera->updateCameraVectors();
     }
 }
@@ -23,8 +41,8 @@ Cinemachine::Cinemachine(Camera* cam) {
     switchTime = 1.0f;
     switchTimer = switchTime;
     // 默认添加一个第三人称相机和一个第一人称相机
-    virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 2.0f, 2.0f))); // 第三人称
-    virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, .15f, 0.0f))); // 第一人称
+    virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 2.0f, 0.0f))); // 第三人称
+    virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 0.25f, 0.0f))); // 第一人称
     virtualCameras.push_back(VirtualCamera(cam, glm::vec3(0.0f, 0.0f, 0.0f), true)); // 上帝视角
 }
 
@@ -49,8 +67,8 @@ void Cinemachine::SwitchCamera() {
     }
 }
 
-void Cinemachine::Update(const glm::vec3& targetPosition) {
-    virtualCameras[activeCameraIndex].UpdatePosition(targetPosition);
+void Cinemachine::Update(const glm::vec3& targetPosition, float deltaTime) {
+    virtualCameras[activeCameraIndex].UpdatePosition(targetPosition, deltaTime);
 }
 
 void Cinemachine::ProcessKeyboard(Camera_Movement direction, float deltaTime) {

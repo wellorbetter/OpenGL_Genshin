@@ -69,6 +69,16 @@ void Player::Update(GLFWwindow* window, float deltaTime)
 
 	// 状态的更新
 	stateMachine->currentState->Update(window, deltaTime);
+
+	// 更新玩位置之后就更新相机的位置，相机现在和player重合
+	// 只需要z轴加上-0.1即可
+	/*this->cinemachine->virtualCameras[0].camera->Position = this->getPosition();
+	this->cinemachine->virtualCameras[1].camera->Position = this->getPosition();
+
+	this->cinemachine->virtualCameras[0].camera->Position.z += 
+		-glm::normalize(this->cinemachine->virtualCameras[0].camera->Front).z;
+	this->cinemachine->virtualCameras[1].camera->Position.z += 
+		-glm::normalize(this->cinemachine->virtualCameras[0].camera->Front).z;*/
 }
 
 Player::Player(Cinemachine* _cinemachine):Entity()

@@ -92,7 +92,7 @@ int main()
     player->Awake();
     player->Start();
     // 创建地面对象
-    ground = new Ground("Resources/Textures/ground.jpg");
+    ground = new Ground("Resources/Textures/Ground.jpg");
 
     
 
@@ -132,14 +132,14 @@ int main()
         // 创建模型矩阵并更新位置和旋转
         glm::vec3 characterPosition = player->getPosition();
         glm::vec3 playerDirection = player->getDirection();
-        glm::vec3 initialDirection = glm::vec3(0.0f, 0.0f, -1.0f); // 初始朝向 相机也是这个初始朝向
+        glm::vec3 initialDirection = glm::vec3(0.0, 0.0f, -1.0f); // 初始朝向
 
         // 计算旋转四元数
         glm::quat rotationQuat = glm::rotation(initialDirection, playerDirection);
 
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, characterPosition);
-        // 翻转坐标系 因为开始的时候这个模型是面对着我的
+        // 翻转坐标系
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         model = model * glm::toMat4(rotationQuat); // 应用四元数旋转
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -153,7 +153,7 @@ int main()
         ground->Draw(groundShader, view, projection);
 
         // 更新相机位置
-        cinemachine->Update(characterPosition);
+        cinemachine->Update(characterPosition, deltaTime);
 
         // 交换缓冲区并处理事件
         glfwSwapBuffers(window);

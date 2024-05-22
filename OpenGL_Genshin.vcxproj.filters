@@ -173,9 +173,6 @@
     <ClInclude Include="..\learnOpenGL\stb_image.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Including\Lib\stb_image.h">
-      <Filter>头文件\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="Including\Gensin\Entity\Entity.h">
       <Filter>头文件\Genshin\Entity</Filter>
     </ClInclude>
@@ -214,6 +211,12 @@
     </ClInclude>
     <ClInclude Include="Including\Gensin\GameObject\GameObject.h">
       <Filter>头文件\Genshin\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Lib\FastNoiseLite.h">
+      <Filter>头文件\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Lib\stb_image.h">
+      <Filter>头文件\Lib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
