@@ -201,7 +201,7 @@ void DrawPlayer(Shader& playerShader, glm::mat4& projection, glm::mat4& view, Pl
 
     // 绘制player模型
     player->model->Draw(playerShader);
-    player->RenderCollider();
+    //player->RenderCollider();
     // 渲染地面
     ground->Draw(groundShader, view, projection);
     // 更新相机位置
@@ -234,7 +234,7 @@ void DrawEnemy(Shader& enemyShader, glm::mat4& projection, glm::mat4& view, Enem
     enemyModel = enemyModel * glm::toMat4(enemyRotationQuat); // 应用四元数旋转
     enemyModel = glm::scale(enemyModel, glm::vec3(3.0f, 3.0f, 3.0f));
     enemyShader.setMat4("model", enemyModel);
-    enemy->RenderCollider();
+    //enemy->RenderCollider();
     // 绘制敌人模型
     enemy->model->Draw(enemyShader);
 }
@@ -265,7 +265,7 @@ void DrawBullet(Shader& bulletShader, glm::mat4& projection, glm::mat4& view, Bu
     bulletModel = bulletModel * glm::toMat4(bulletRotationQuat); // 应用四元数旋转
     bulletModel = glm::scale(bulletModel, glm::vec3(0.01, 0.01, 0.01));
     bulletShader.setMat4("model", bulletModel);
-    bullet->RenderCollider();
+    //bullet->RenderCollider();
     // 绘制敌人模型
     bullet->model->Draw(bulletShader);
 }

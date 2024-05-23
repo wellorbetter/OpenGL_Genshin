@@ -27,3 +27,10 @@ Opengl做一个原神贴膜的无尽跑酷游戏，感觉可能类似于c++小�
 2. 写了AABB Collider，但是还没有限制碰撞和具体的碰撞逻辑，写了人物攻击发射子弹，同样没完善子弹和其他collider碰撞
 3. 添加Enemy，Idle、Move和Attack，具体逻辑没写，目前只会Idle，应当会在Front一定角度和范围内感知player，然后朝着player走过去，一定角度和范围内会进行攻击，待完善
 4. 换一个敌人模型，考虑pmx转obj
+
+##### Day5:
+1. 完成Enemy的Idle、Move和Attack逻辑
+2. Player可以攻击，完成子弹Bullet的发射和模型展示
+3. 完成AABB碰撞Collider，但是存在bug，这个框在Idle的时候是在player身上，但是一旦move，就不对了（enemy同理，或许bug在move上）
+4. 完成bullet对enemy的碰撞检测，使用EnemyManager单例模式对Enemy进行管理，可以同时产生多个enemy
+5. enemy受到攻击三次就会消失(但是还是碰撞框的问题，没找到bug，就可能一直打不到enemy)
