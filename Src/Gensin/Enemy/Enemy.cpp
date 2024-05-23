@@ -15,14 +15,38 @@ void Enemy::Awake()
 void Enemy::Start()
 {
 	// 当前的位置当然不能和player重合
-	this->position = glm::vec3(2.0f, 0.0f, 2.0f);
+	this->position = glm::vec3(5.0f, 0.0f, 2.0f);
+    glm::vec3 speed = glm::vec3(1.0f, 1.0f, 1.0f);
+    this->setSpeed(speed);
 	stateMachine->InitialState(this->idleState);
 }
 
 void Enemy::Update(GLFWwindow* window, float deltaTime)
 {
-	stateMachine->currentState->Update(window, deltaTime);
+    // 计算从enemy到player的方向向量
+    glm::vec3 directionToPlayer = this->player->getPosition() - this->getPosition();
+    directionToPlayer.y = 0; // 不更新y轴
+
+    // 检查向量长度是否为零
+    if (glm::length(directionToPlayer) > 0.0001f) {
+        glm::vec3 newDirection = glm::normalize(directionToPlayer);
+
+        // 使用线性插值来平滑方向更新
+        float smoothingFactor = 0.1f; // 调整这个值来控制平滑程度
+        glm::vec3 currentDirection = this->getDirection();
+        glm::vec3 smoothedDirection = glm::mix(currentDirection, newDirection, smoothingFactor);
+
+        // 再次规范化新方向
+        smoothedDirection = glm::normalize(smoothedDirection);
+
+        // printf("%f %f %f\n", smoothedDirection.x, smoothedDirection.y, smoothedDirection.z);
+        this->setDirection(smoothedDirection);
+    }
+
+    stateMachine->currentState->Update(window, deltaTime);
 }
+
+
 
 void Enemy::Damage()
 {

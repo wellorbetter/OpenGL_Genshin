@@ -98,7 +98,9 @@ int main()
     Enemy* enemy = new Enemy(player);
     enemy->Awake();
     enemy->Start();
-    
+
+    // printf("%lf %lf %lf\n", enemy->position.x, enemy->position.y, enemy->position.z);
+
     // 创建地面对象
     ground = new Ground("Resources/Textures/Ground.jpg");
 
@@ -188,8 +190,8 @@ int main()
 
         glm::mat4 enemyModel = glm::mat4(1.0f);
         enemyModel = glm::translate(enemyModel, enemyPosition);
-        // 翻转坐标系
-        enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        // 翻转坐标系 这个不用，因为它正好需要面对player 抵消了
+        // enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         enemyModel = enemyModel * glm::toMat4(enemyRotationQuat); // 应用四元数旋转
         enemyModel = glm::scale(enemyModel, glm::vec3(3.0f, 3.0f, 3.0f));
         enemyShader.setMat4("model", enemyModel);
