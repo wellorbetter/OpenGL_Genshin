@@ -133,6 +133,7 @@
     <ClCompile Include="Src\Gensin\Enemy\Enemy.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyAttackState.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyIdleState.cpp" />
+    <ClCompile Include="Src\Gensin\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyMoveState.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyState.cpp" />
     <ClCompile Include="Src\Gensin\Enemy\EnemyStateMachine.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Including\Gensin\Enemy\Enemy.h" />
     <ClInclude Include="Including\Gensin\Enemy\EnemyAttackState.h" />
     <ClInclude Include="Including\Gensin\Enemy\EnemyIdleState.h" />
+    <ClInclude Include="Including\Gensin\Enemy\EnemyManager.h" />
     <ClInclude Include="Including\Gensin\Enemy\EnemyMoveState.h" />
     <ClInclude Include="Including\Gensin\Enemy\EnemyState.h" />
     <ClInclude Include="Including\Gensin\Enemy\EnemyStateMachine.h" />

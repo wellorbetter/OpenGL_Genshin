@@ -11,10 +11,14 @@
 #include "../Including/Gensin/Ground/Ground.h"
 #include "../Including/Gensin/Player/Player.h"
 #include "../Including/Gensin/Enemy/Enemy.h"
+#include "../Including/Gensin/Enemy/EnemyManager.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void DrawPlayer(Shader& playerShader, glm::mat4& projection, glm::mat4& view, Player* player, Shader& groundShader);
+void DrawEnemy(Shader& enemyShader, glm::mat4& projection, glm::mat4& view, Enemy* enemy);
+void DrawBullet(Shader& bulletShader, glm::mat4& projection, glm::mat4& view, Bullet* bullet);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
@@ -82,8 +86,9 @@ int main()
     // build and compile shaders
     Shader playerShader("Resources/Shaders/anim_model.vs", "Resources/Shaders/anim_model.fs");
     Shader enemyShader("Resources/Shaders/anim_model.vs", "Resources/Shaders/anim_model.fs");
-    Shader groundShader("Resources/Shaders/ground.vs", "Resources/Shaders/ground.fs");
+    Shader bulletShader("Resources/Shaders/anim_model.vs", "Resources/Shaders/anim_model.fs");
 
+    Shader groundShader("Resources/Shaders/ground.vs", "Resources/Shaders/ground.fs");
     // load models
     /*Model ourModel("Animation/Babala/Idle/Idle.dae");
     Animation danceAnimation("Animation/Babala/Idle/Idle.dae", &ourModel);
@@ -98,6 +103,8 @@ int main()
     Enemy* enemy = new Enemy(player);
     enemy->Awake();
     enemy->Start();
+
+    EnemyManager::getInstance().addEnemy(enemy);
 
     // printf("%lf %lf %lf\n", enemy->position.x, enemy->position.y, enemy->position.z);
 
@@ -114,93 +121,40 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        // 更新玩家状态
-        player->Update(window, deltaTime);
-        player->animator->UpdateAnimation(deltaTime);
-
-        enemy->Update(window, deltaTime);
-        enemy->animator->UpdateAnimation(deltaTime);
-
-
         // 清除缓冲区
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // 启用着色器
-        playerShader.use();
+        
 
         // 设置视图和投影矩阵
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-        playerShader.setMat4("projection", projection);
-        playerShader.setMat4("view", view);
 
-        // 获取骨骼矩阵并设置到着色器
-        auto transforms = player->animator->GetFinalBoneMatrices();
-        for (int i = 0; i < transforms.size(); ++i)
+        DrawPlayer(playerShader, projection, view, player, groundShader);
+        // 更新玩家状态
+        player->Update(window, deltaTime);
+        player->animator->UpdateAnimation(deltaTime);
+
+        if (enemy && !enemy->isAlive)
         {
-            playerShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+            delete enemy;
+            enemy = nullptr;
         }
 
-        // 渲染模型
-        // 创建模型矩阵并更新位置和旋转
-        glm::vec3 characterPosition = player->getPosition();
-        glm::vec3 playerDirection = player->getDirection();
-        glm::vec3 initialDirection = glm::vec3(0.0, 0.0f, -1.0f); // 初始朝向
-
-        // 计算旋转四元数
-        glm::quat rotationQuat = glm::rotation(initialDirection, playerDirection);
-
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, characterPosition);
-        // 翻转坐标系
-        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = model * glm::toMat4(rotationQuat); // 应用四元数旋转
-        model = glm::scale(model, glm::vec3(1.0, 1.0, 1.0));
-        playerShader.setMat4("model", model);
-
-        // 绘制player模型
-        player->model->Draw(playerShader);
-
-        // 渲染地面
-        ground->Draw(groundShader, view, projection);
-
-        // 更新相机位置
-        cinemachine->Update(characterPosition, deltaTime);
-
-
-        enemyShader.use();
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = camera.GetViewMatrix();
-        enemyShader.setMat4("projection", projection);
-        enemyShader.setMat4("view", view);
-        // 绘制敌人
-        transforms = enemy->animator->GetFinalBoneMatrices();
-        for (int i = 0; i < transforms.size(); ++i)
+        if (enemy)
         {
-            enemyShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+            DrawEnemy(enemyShader, projection, view, enemy);
+            enemy->Update(window, deltaTime);
+            enemy->animator->UpdateAnimation(deltaTime);
         }
 
-        glm::vec3 enemyPosition = enemy->getPosition();
-        glm::vec3 enemyDirection = enemy->getDirection();
-        glm::vec3 enemyInitialDirection = glm::vec3(0.0, 0.0f, 1.0f); // 初始朝向
+        for (auto bullet : player->bullets)
+        {
+            DrawBullet(bulletShader, projection, view, bullet);
+            player->updateBullets(deltaTime);
+        }
 
-        // 计算旋转四元数
-        glm::quat enemyRotationQuat = glm::rotation(enemyInitialDirection, enemyDirection);
-
-        glm::mat4 enemyModel = glm::mat4(1.0f);
-        enemyModel = glm::translate(enemyModel, enemyPosition);
-        // 翻转坐标系 这个不用，因为它正好需要面对player 抵消了
-        // enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        enemyModel = enemyModel * glm::toMat4(enemyRotationQuat); // 应用四元数旋转
-        enemyModel = glm::scale(enemyModel, glm::vec3(3.0f, 3.0f, 3.0f));
-        enemyShader.setMat4("model", enemyModel);
-
-        // 绘制敌人模型
-        enemy->model->Draw(enemyShader);
-
-        
-        
         // 交换缓冲区并处理事件
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -212,6 +166,109 @@ int main()
     delete ground;
     delete cinemachine;
     return 0;
+}
+
+void DrawPlayer(Shader& playerShader, glm::mat4& projection, glm::mat4& view, Player* player, Shader& groundShader)
+{
+    // 启用着色器
+    playerShader.use();
+    playerShader.setMat4("projection", projection);
+    playerShader.setMat4("view", view);
+
+    // 获取骨骼矩阵并设置到着色器
+    auto transforms = player->animator->GetFinalBoneMatrices();
+    for (int i = 0; i < transforms.size(); ++i)
+    {
+        playerShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+    }
+
+    // 渲染模型
+    // 创建模型矩阵并更新位置和旋转
+    glm::vec3 characterPosition = player->getPosition();
+    glm::vec3 playerDirection = player->getDirection();
+    glm::vec3 initialDirection = glm::vec3(0.0, 0.0f, -1.0f); // 初始朝向
+
+    // 计算旋转四元数
+    glm::quat rotationQuat = glm::rotation(initialDirection, playerDirection);
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, characterPosition);
+    // 翻转坐标系
+    model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = model * glm::toMat4(rotationQuat); // 应用四元数旋转
+    model = glm::scale(model, glm::vec3(1.0, 1.0, 1.0));
+    playerShader.setMat4("model", model);
+
+    // 绘制player模型
+    player->model->Draw(playerShader);
+
+    // 渲染地面
+    ground->Draw(groundShader, view, projection);
+
+    // 更新相机位置
+    cinemachine->Update(characterPosition, deltaTime);
+}
+
+void DrawEnemy(Shader& enemyShader, glm::mat4& projection, glm::mat4& view, Enemy* enemy)
+{
+    enemyShader.use();
+    enemyShader.setMat4("projection", projection);
+    enemyShader.setMat4("view", view);
+    // 绘制敌人
+    auto transforms = enemy->animator->GetFinalBoneMatrices();
+    for (int i = 0; i < transforms.size(); ++i)
+    {
+        enemyShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+    }
+
+    glm::vec3 enemyPosition = enemy->getPosition();
+    glm::vec3 enemyDirection = enemy->getDirection();
+    glm::vec3 enemyInitialDirection = glm::vec3(0.0, 0.0f, 1.0f); // 初始朝向
+
+    // 计算旋转四元数
+    glm::quat enemyRotationQuat = glm::rotation(enemyInitialDirection, enemyDirection);
+
+    glm::mat4 enemyModel = glm::mat4(1.0f);
+    enemyModel = glm::translate(enemyModel, enemyPosition);
+    // 翻转坐标系 这个不用，因为它正好需要面对player 抵消了
+    // enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    enemyModel = enemyModel * glm::toMat4(enemyRotationQuat); // 应用四元数旋转
+    enemyModel = glm::scale(enemyModel, glm::vec3(3.0f, 3.0f, 3.0f));
+    enemyShader.setMat4("model", enemyModel);
+
+    // 绘制敌人模型
+    enemy->model->Draw(enemyShader);
+}
+
+void DrawBullet(Shader& bulletShader, glm::mat4& projection, glm::mat4& view, Bullet* bullet)
+{
+    bulletShader.use();
+    bulletShader.setMat4("projection", projection);
+    bulletShader.setMat4("view", view);
+    // 绘制敌人
+    auto transforms = bullet->animator->GetFinalBoneMatrices();
+    for (int i = 0; i < transforms.size(); ++i)
+    {
+        bulletShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+    }
+
+    glm::vec3 bulletPosition = bullet->getPosition();
+    glm::vec3 bulletDirection = bullet->getDirection();
+    glm::vec3 bulletInitialDirection = glm::vec3(0.0, 0.0f, 1.0f); // 初始朝向
+
+    // 计算旋转四元数
+    glm::quat bulletRotationQuat = glm::rotation(bulletInitialDirection, bulletDirection);
+
+    glm::mat4 bulletModel = glm::mat4(1.0f);
+    bulletModel = glm::translate(bulletModel, bulletPosition);
+    // 翻转坐标系 这个不用，因为它正好需要面对player 抵消了
+    // enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    bulletModel = bulletModel * glm::toMat4(bulletRotationQuat); // 应用四元数旋转
+    bulletModel = glm::scale(bulletModel, glm::vec3(0.01, 0.01, 0.01));
+    bulletShader.setMat4("model", bulletModel);
+
+    // 绘制敌人模型
+    bullet->model->Draw(bulletShader);
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly

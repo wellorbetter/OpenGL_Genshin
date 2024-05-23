@@ -12,7 +12,7 @@ public:
 	Model* model;
 	std::string modelPath;
 	glm::vec3 position;
-	float HP;
+	float HP; bool isAlive = true;
 	Entity();
 
 	void setSpeed(glm::vec3& _speed);

@@ -51,7 +51,15 @@ void Enemy::Update(GLFWwindow* window, float deltaTime)
 void Enemy::Damage()
 {
 	__super::Damage();
+    // 如果生命值为0，就销毁
+    std::cout << "Enemy HP: " << this->HP << std::endl;
+    if (this->HP <= 0) {
+        // 这里不会把this给删了，只是把这个对象的状态改为destroyed
+        isAlive = false;
+		this->Destroy();
+	}
 }
+
 
 Enemy::Enemy(Player* _player)
 {

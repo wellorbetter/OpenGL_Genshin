@@ -1,5 +1,7 @@
 #include "../../../Including/Gensin/Player/Player.h"
 #include "../../../Including/Gensin/Player/PlayerIdleState.h"
+#include "../../../Including/Gensin/Enemy/EnemyManager.h"
+
 std::map<string, Model*> Animator::models;
 std::map<std::string, Animation*> Animator::animations;
 void Player::Awake()
@@ -96,19 +98,46 @@ void Player::Damage()
 }
 
 
-// 发出子弹 长度为len的射线检测碰撞
+// 发射子弹
 void Player::fireBullet(float len)
 {
-	// 方向为camera.Front
+	// 方向是player正方向
 	glm::vec3 direction = this->cinemachine->virtualCameras[1].camera->Front;
-	for (int i = 0; i < 10; i++)
+	bullets.push_back(new Bullet(this, this->getPosition(), direction, 5.0f));
+}
+
+// 更新子弹位置
+void Player::updateBullets(float deltaTime)
+{
+	for (auto it = bullets.begin(); it != bullets.end(); )
 	{
-		// 生成一个子弹 这里有问题
-		Bullet* bullet = new Bullet(this->getPosition(), direction, 0.1);
+		// 根据deltatime和速度来更新子弹位置
+		(*it)->Update(deltaTime);
 		// 检测碰撞
-		if (bullet->collisionCheck(this))
+
+		// 检查子弹是否超出最大距离，删除子弹
+		if (glm::length((*it)->getPosition() - this->getPosition()) > maxBulletDistance)
 		{
-			this->Damage();
+			delete* it;
+			it = bullets.erase(it);
+		}
+		else
+		{
+			bool isCollision = false;
+			for (Enemy* enemy : EnemyManager::getInstance().getEnemies())
+			{
+				if (enemy) continue;
+				if ((*it)->collisionCheck(enemy))
+				{
+					enemy->Damage(); // 对敌人造成伤害
+					delete* it;
+					isCollision = true;
+					it = bullets.erase(it); // 碰撞后销毁子弹
+					break;
+				}
+			}
+			if (isCollision) continue;
+			++it;
 		}
 	}
 }

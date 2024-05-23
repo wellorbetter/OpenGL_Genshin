@@ -147,6 +147,9 @@
     <ClCompile Include="Src\Gensin\Enemy\EnemyIdleState.cpp">
       <Filter>源文件\Genshin\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Gensin\Enemy\EnemyManager.cpp">
+      <Filter>源文件\Genshin\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Including\Utils\animation.h">
@@ -246,6 +249,9 @@
       <Filter>头文件\Genshin\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Including\Gensin\Enemy\EnemyIdleState.h">
+      <Filter>头文件\Genshin\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Including\Gensin\Enemy\EnemyManager.h">
       <Filter>头文件\Genshin\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
