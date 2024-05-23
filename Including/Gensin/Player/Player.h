@@ -32,7 +32,6 @@ public:
 
     void fireBullet(float len);
     void updateBullets(float deltaTime);
-    void checkBulletCollision();
     float maxBulletDistance = 15.0f; // 设置子弹的最大距离
 
 	Cinemachine* cinemachine;

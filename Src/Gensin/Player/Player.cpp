@@ -85,6 +85,11 @@ Player::Player(Cinemachine* _cinemachine):Entity()
 {
 	this->cinemachine = _cinemachine;
 	// 拿到相机的第一人称的位置 以及朝向 同时修改了碰撞体的位置
+
+	// 实际上这个第一人称会有点点偏移，导致这个collider的位置也会有点点偏移
+	// 所以这里setPositon里面需要修改一下，把这个virualcamera的偏移减去
+
+	// 主要是我这里第一人称有点问题，不然的话其实差不多
 	this->setPosition(this->cinemachine->virtualCameras[1].camera->Position);
 	this->setDirection(this->cinemachine->virtualCameras[1].camera->Front);
 }

@@ -84,14 +84,16 @@ void Entity::setPosition(glm::vec3& _position)
 	this->setColliderPosition(_position);
 }
 
-void Entity::setColliderPosition(glm::vec3& _position)
-{
-	// 当前中心点就是position的位置，以它为中心长为boxLength的盒子即可
+// 设置碰撞器的位置
+void Entity::setColliderPosition(glm::vec3& _position) {
 	this->colliderCenter = _position;
-	this->leftDown = glm::vec3(_position.x - this->boxLength / 2, _position.y - this->boxLength / 2, _position.z - this->boxLength / 2);
-	this->rightUp = glm::vec3(_position.x + this->boxLength / 2, _position.y + this->boxLength / 2, _position.z + this->boxLength / 2);
+	this->leftDown = glm::vec3(_position.x - this->boxLength / 2,
+		_position.y - this->boxLength / 2,
+		_position.z - this->boxLength / 2);
+	this->rightUp = glm::vec3(_position.x + this->boxLength / 2,
+		_position.y + this->boxLength / 2,
+		_position.z + this->boxLength / 2);
 }
-
 
 void Entity::setPosition(glm::vec2& _position)
 {

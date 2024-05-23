@@ -30,7 +30,7 @@ public:
 
 
 	glm::vec3 getPosition();
-	void setPosition(glm::vec3& _position);
+	virtual void setPosition(glm::vec3& _position);
 	void setPosition(glm::vec2& _position);
 	void setColliderPosition(glm::vec3& _position);
 	// 需要给Animator设置update
