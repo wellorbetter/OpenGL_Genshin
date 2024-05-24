@@ -14,7 +14,7 @@ public:
     EnemyStateMachine* stateMachine;
     EnemyIdleState* idleState;
     Player* player;
-
+    Collider* collider;
     // ¹¹Ôìº¯Êı
     Enemy(Player* _player);
 

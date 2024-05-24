@@ -18,6 +18,7 @@ public:
 	PlayerMoveState* moveState;
 	PlayerJumpState* jumpState;
 	PlayerAttackState* attackState;
+    Collider* collider;
 
 	Player(Cinemachine* _cinemachine);
 
@@ -39,12 +40,12 @@ public:
     
 };
 
-class Bullet: public Collider
-{
+class Bullet{
 public:
     Bullet(Player* player, glm::vec3 startPosition, glm::vec3 direction, float speed)
         : player(player), position(startPosition), direction(glm::normalize(direction)), speed(speed)
     {
+        collider = new Collider();
         model = new Model("Resources/Model/Bullet/Bullet.dae");
         animation = new Animation("Resources/Model/Bullet/Bullet.dae", model);
         animator = new Animator(animation);
@@ -53,10 +54,12 @@ public:
     void Update(float deltaTime)
     {
         position += direction * speed * deltaTime;
+        this->collider->UpdateCollider(this->position);
     }
 
     glm::vec3 getPosition() const { return position; }
     glm::vec3 getDirection() const { return direction; }
+    Collider* collider;
     Player* player;
     Model* model;
     Animation* animation;

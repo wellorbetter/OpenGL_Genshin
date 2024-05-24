@@ -4,6 +4,9 @@
 void Enemy::Awake()
 {
 	modelPath = "Animation/WeirdQiuqiuren/";
+
+    collider = new Collider();
+    this->collider->boxLength = 0.1f;
 	// 初始化状态机
 	stateMachine = new EnemyStateMachine();
 	// 初始化状态
@@ -15,7 +18,8 @@ void Enemy::Awake()
 void Enemy::Start()
 {
 	// 当前的位置当然不能和player重合
-	this->position = glm::vec3(5.0f, 0.0f, 2.0f);
+    // 使用随机数生成位置
+	this->position = glm::vec3(rand() % 10, 0.0f, rand() % 10);
     glm::vec3 speed = glm::vec3(1.0f, 1.0f, 1.0f);
     this->setSpeed(speed);
 	stateMachine->InitialState(this->idleState);
@@ -42,8 +46,10 @@ void Enemy::Update(GLFWwindow* window, float deltaTime)
         // printf("%f %f %f\n", smoothedDirection.x, smoothedDirection.y, smoothedDirection.z);
         this->setDirection(smoothedDirection);
     }
-
+    
     stateMachine->currentState->Update(window, deltaTime);
+    this->collider->UpdateCollider(this->position);
+    //this->collider->RenderCollider();
 }
 
 
@@ -56,7 +62,6 @@ void Enemy::Damage()
     if (this->HP <= 0) {
         // 这里不会把this给删了，只是把这个对象的状态改为destroyed
         isAlive = false;
-		this->Destroy();
 	}
 }
 

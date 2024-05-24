@@ -9,6 +9,7 @@ public:
     glm::vec3 offset;
     Camera* camera;
     bool isFreeCamera;
+    glm::vec3 backOffset;
     // 更新不平滑，fixed更新可能会好点
 
     float updateTime = .02f, updateTimer;
@@ -25,6 +26,7 @@ public:
     int activeCameraIndex;
     float switchTime;
     float switchTimer;
+    
 
     Cinemachine(Camera* cam);
 

@@ -18,8 +18,12 @@ void VirtualCamera::UpdatePosition(const glm::vec3& targetPosition, float deltaT
 
         // 计算当前位置到目标位置的向量
         glm::vec3 currentPos = camera->Position;
-        glm::vec3 bacOffset = glm::vec3(-camera->Front.x, 0.0f, -camera->Front.z);
-        glm::vec3 targetPos = targetPosition + offset + glm::normalize(bacOffset) * .3f;
+
+        // 我这里每次都会添加一个backset，这是为了让这个相机每次都会在目标的背后
+        // 方便看到目标，但是呢，我这样会导致实际的位置出现错误
+        // 很好，不是这个问题，就算是，这个.3f也是很小的，没这么远才对
+        glm::vec3 targetPos = targetPosition + offset + -this->camera->Front * .3f;
+        this->backOffset = -this->camera->Front * .3f;
         glm::vec3 direction = targetPos - currentPos;
 
         // 进行插值

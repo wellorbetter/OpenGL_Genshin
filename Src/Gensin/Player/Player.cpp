@@ -9,6 +9,7 @@ void Player::Awake()
 	// 初始化动画 setAnim直接拿
 	// 创建某些状态 加载东西
 	modelPath = "Animation/Babala/";
+	this->collider = new Collider();
 	this->stateMachine = new PlayerStateMachine();
 	this->idleState = new PlayerIdleState(this, this->stateMachine, "Idle");
 	this->moveState = new PlayerMoveState(this, this->stateMachine, "Move");
@@ -18,6 +19,7 @@ void Player::Awake()
 
 void Player::Start()
 {
+	this->position = glm::vec3(0.0, 0.0, 1.0f);
 	// 开始进入状态渲染
 	this->stateMachine->InitialState(this->idleState);
 	// 设定移动速度
@@ -69,16 +71,9 @@ void Player::Update(GLFWwindow* window, float deltaTime)
 
 	// 状态的更新
 	stateMachine->currentState->Update(window, deltaTime);
-
-	// 更新玩位置之后就更新相机的位置，相机现在和player重合
-	// 只需要z轴加上-0.1即可
-	/*this->cinemachine->virtualCameras[0].camera->Position = this->getPosition();
-	this->cinemachine->virtualCameras[1].camera->Position = this->getPosition();
-
-	this->cinemachine->virtualCameras[0].camera->Position.z += 
-		-glm::normalize(this->cinemachine->virtualCameras[0].camera->Front).z;
-	this->cinemachine->virtualCameras[1].camera->Position.z += 
-		-glm::normalize(this->cinemachine->virtualCameras[0].camera->Front).z;*/
+	
+	this->collider->UpdateCollider(this->position);
+	//this->collider->RenderCollider();
 }
 
 Player::Player(Cinemachine* _cinemachine):Entity()
@@ -86,11 +81,9 @@ Player::Player(Cinemachine* _cinemachine):Entity()
 	this->cinemachine = _cinemachine;
 	// 拿到相机的第一人称的位置 以及朝向 同时修改了碰撞体的位置
 
-	// 实际上这个第一人称会有点点偏移，导致这个collider的位置也会有点点偏移
-	// 所以这里setPositon里面需要修改一下，把这个virualcamera的偏移减去
-
-	// 主要是我这里第一人称有点问题，不然的话其实差不多
-	this->setPosition(this->cinemachine->virtualCameras[1].camera->Position);
+	// 这个位置需要加上一定的偏移量，因为我相机的位置和实际的位置不一样，我加了一个backOffset
+	/*glm::vec3 newPositon = this->cinemachine->virtualCameras[1].camera->Position - this->cinemachine->virtualCameras[1].backOffset;
+	this->setPosition(newPositon);*/
 	this->setDirection(this->cinemachine->virtualCameras[1].camera->Front);
 }
 
@@ -108,7 +101,8 @@ void Player::fireBullet(float len)
 {
 	// 方向是player正方向
 	glm::vec3 direction = this->cinemachine->virtualCameras[1].camera->Front;
-	bullets.push_back(new Bullet(this, this->getPosition(), direction, 5.0f));
+	direction.y = 0;
+	bullets.push_back(new Bullet(this, this->getPosition(), direction, 1.5f));
 }
 
 // 更新子弹位置
@@ -118,7 +112,6 @@ void Player::updateBullets(float deltaTime)
 	{
 		// 根据deltatime和速度来更新子弹位置
 		(*it)->Update(deltaTime);
-		// 检测碰撞
 
 		// 检查子弹是否超出最大距离，删除子弹
 		if (glm::length((*it)->getPosition() - this->getPosition()) > maxBulletDistance)
@@ -127,17 +120,20 @@ void Player::updateBullets(float deltaTime)
 			it = bullets.erase(it);
 		}
 		else
-		{
+		{// 检测碰撞
 			bool isCollision = false;
 			for (Enemy* enemy : EnemyManager::getInstance().getEnemies())
 			{
-				if (enemy) continue;
-				if ((*it)->collisionCheck(enemy))
+				if (!enemy || !enemy->isAlive || !enemy->collider) continue;
+				if ((*it)->collider->collisionCheck(enemy->collider))
 				{
 					enemy->Damage(); // 对敌人造成伤害
+					// 不太懂c++ 指针destroy写一堆bug 受不了了
+					// 置空写在Main里面了
 					delete* it;
+					*it = nullptr;
 					isCollision = true;
-					it = bullets.erase(it); // 碰撞后销毁子弹
+					it = bullets.erase(it);
 					break;
 				}
 			}

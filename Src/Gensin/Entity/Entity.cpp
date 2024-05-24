@@ -1,7 +1,7 @@
 #include "../../../Including/Gensin/Entity/Entity.h"
 
 Entity::Entity()
-	:GameObject(), Collider()
+	:GameObject()
 {
 	this->position = glm::vec3(0.0f);
 	this->speed = glm::vec3(0.0f);
@@ -80,20 +80,8 @@ void Entity::setAnimation(string _stateName, bool _isActive)
 void Entity::setPosition(glm::vec3& _position)
 {
 	this->position = _position;
-	// 更新位置的时候也要更新碰撞体的位置
-	this->setColliderPosition(_position);
 }
 
-// 设置碰撞器的位置
-void Entity::setColliderPosition(glm::vec3& _position) {
-	this->colliderCenter = _position;
-	this->leftDown = glm::vec3(_position.x - this->boxLength / 2,
-		_position.y - this->boxLength / 2,
-		_position.z - this->boxLength / 2);
-	this->rightUp = glm::vec3(_position.x + this->boxLength / 2,
-		_position.y + this->boxLength / 2,
-		_position.z + this->boxLength / 2);
-}
 
 void Entity::setPosition(glm::vec2& _position)
 {
@@ -130,13 +118,6 @@ void Entity::Start()
 
 }
 
-void Entity::Destroy()
-{
-	// 看看顺序有没有问题
-	delete this->model;
-	delete this->animation;
-	delete this->animator;
-}
 
 void Entity::Damage()
 {

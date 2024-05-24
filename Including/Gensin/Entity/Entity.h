@@ -6,7 +6,7 @@
 #include "../GameObject/GameObject.h"
 // 实体类
 // 首先应该具有速度，位置，动画等属性
-class Entity:public GameObject, public Collider {
+class Entity:public GameObject{
 public:
 	Animator* animator;
 	Model* model;
@@ -36,8 +36,6 @@ public:
 	// 需要给Animator设置update
 	void UpdateAnimation(float deltaTime);
 
-	// 移动
-	void move(glm::vec2 _direction, float deltaTime);
 
 	// 给出模型dae的地址，直接设置对应的模型和动画
 	// 算了直接给出状态名更加贴切
@@ -47,7 +45,6 @@ public:
 	void Update(GLFWwindow* window) override;
 	void Awake() override;
 	void Start() override;
-	void Destroy() override;
 	virtual void Damage();
 private:
 	// 模型 给出模型地址然后加载

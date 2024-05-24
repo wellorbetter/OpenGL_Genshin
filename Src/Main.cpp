@@ -111,8 +111,10 @@ int main()
     // 创建地面对象
     ground = new Ground("Resources/Textures/Ground.jpg");
 
-    
-
+    float enemyGenerateTime = 15.0f;
+    float enemyGenerateTimer = enemyGenerateTime;
+    int enemyCountLimit = 3;
+    int enemyCount = 1;
     // render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -121,6 +123,22 @@ int main()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // 只有当没满的时候才会生成敌人
+        if (enemyCount < enemyCountLimit)
+        {
+            enemyGenerateTimer -= deltaTime;
+        }
+
+        if (enemyCount < enemyCountLimit && enemyGenerateTimer < 0)
+        {
+            enemyCount++;
+            enemyGenerateTimer = enemyGenerateTime;
+			Enemy* newEnemy = new Enemy(player);
+			newEnemy->Awake();
+			newEnemy->Start();
+			EnemyManager::getInstance().addEnemy(newEnemy);
+            printf("生成了新敌人\n");
+		}
         // 清除缓冲区
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -136,23 +154,34 @@ int main()
         player->Update(window, deltaTime);
         player->animator->UpdateAnimation(deltaTime);
 
-        if (enemy && !enemy->isAlive)
+        for (Enemy* enemy: EnemyManager::getInstance().getEnemies())
         {
-            delete enemy;
-            enemy = nullptr;
+            if (enemy && !enemy->isAlive)
+            {
+                EnemyManager::getInstance().removeEnemy(enemy);
+                delete enemy;
+                enemy = nullptr;
+                enemyCount--;
+            }
         }
 
-        if (enemy)
+        for (Enemy* enemy : EnemyManager::getInstance().getEnemies())
         {
-            DrawEnemy(enemyShader, projection, view, enemy);
-            enemy->Update(window, deltaTime);
-            enemy->animator->UpdateAnimation(deltaTime);
+            if (enemy)
+            {
+                DrawEnemy(enemyShader, projection, view, enemy);
+                enemy->Update(window, deltaTime);
+                enemy->animator->UpdateAnimation(deltaTime);
+            }
         }
 
         for (auto bullet : player->bullets)
         {
-            DrawBullet(bulletShader, projection, view, bullet);
-            player->updateBullets(deltaTime);
+            if (bullet && bullet->collider)
+            {
+                DrawBullet(bulletShader, projection, view, bullet);
+                player->updateBullets(deltaTime);
+            }
         }
 
         // 交换缓冲区并处理事件
@@ -201,7 +230,6 @@ void DrawPlayer(Shader& playerShader, glm::mat4& projection, glm::mat4& view, Pl
 
     // 绘制player模型
     player->model->Draw(playerShader);
-    //player->RenderCollider();
     // 渲染地面
     ground->Draw(groundShader, view, projection);
     // 更新相机位置
@@ -227,14 +255,13 @@ void DrawEnemy(Shader& enemyShader, glm::mat4& projection, glm::mat4& view, Enem
     // 计算旋转四元数
     glm::quat enemyRotationQuat = glm::rotation(enemyInitialDirection, enemyDirection);
 
-    glm::mat4 enemyModel = glm::mat4(1.0f);
-    enemyModel = glm::translate(enemyModel, enemyPosition);
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, enemyPosition);
     // 翻转坐标系 这个不用，因为它正好需要面对player 抵消了
-    // enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    enemyModel = enemyModel * glm::toMat4(enemyRotationQuat); // 应用四元数旋转
-    enemyModel = glm::scale(enemyModel, glm::vec3(3.0f, 3.0f, 3.0f));
-    enemyShader.setMat4("model", enemyModel);
-    //enemy->RenderCollider();
+    //model  = glm::rotate(model , glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = model * glm::toMat4(enemyRotationQuat); // 应用四元数旋转
+    model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+    enemyShader.setMat4("model", model);
     // 绘制敌人模型
     enemy->model->Draw(enemyShader);
 }
@@ -258,14 +285,12 @@ void DrawBullet(Shader& bulletShader, glm::mat4& projection, glm::mat4& view, Bu
     // 计算旋转四元数
     glm::quat bulletRotationQuat = glm::rotation(bulletInitialDirection, bulletDirection);
 
-    glm::mat4 bulletModel = glm::mat4(1.0f);
-    bulletModel = glm::translate(bulletModel, bulletPosition);
-    // 翻转坐标系 这个不用，因为它正好需要面对player 抵消了
-    // enemyModel = glm::rotate(enemyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    bulletModel = bulletModel * glm::toMat4(bulletRotationQuat); // 应用四元数旋转
-    bulletModel = glm::scale(bulletModel, glm::vec3(0.01, 0.01, 0.01));
-    bulletShader.setMat4("model", bulletModel);
-    //bullet->RenderCollider();
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, bulletPosition);
+    model = model * glm::toMat4(bulletRotationQuat); // 应用四元数旋转
+    model = glm::scale(model, glm::vec3(0.01, 0.01, 0.01));
+    bulletShader.setMat4("model", model);
+    
     // 绘制敌人模型
     bullet->model->Draw(bulletShader);
 }
