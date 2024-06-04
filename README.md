@@ -29,6 +29,7 @@ Opengl做一个原神贴膜的无尽跑酷游戏，感觉可能类似于c++小�
 4. 换一个敌人模型，考虑pmx转obj
 
 ##### Day5:
+
 1. 完成Enemy的Idle、Move和Attack逻辑
 2. Player可以攻击，完成子弹Bullet的发射和模型展示
 3. 完成AABB碰撞Collider，但是存在bug，这个框在Idle的时候是在player身上，但是一旦move，就不对了（enemy同理，或许bug在move上）
@@ -36,6 +37,7 @@ Opengl做一个原神贴膜的无尽跑酷游戏，感觉可能类似于c++小�
 5. enemy受到攻击三次就会消失(但是还是碰撞框的问题，没找到bug，就可能一直打不到enemy)
 
 ##### Day6:
+
 1. 修复完所有bug
 2. 可以对敌人正常造成伤害，击杀敌人
 3. 并未完成敌人对player的伤害，因为只是demo
@@ -45,3 +47,20 @@ Opengl做一个原神贴膜的无尽跑酷游戏，感觉可能类似于c++小�
 
 
 完结，以后有空了再优化
+
+
+
+很好，汇报结束，感觉还行
+
+除了没加天空盒、没加光照、没给丘丘人加纹理（不会用Blender，老师一句话给打死了：反正之前有人做到过。确实还是太菜了，而且就一个人做）
+
+传几张图，之后有空再加上吧
+
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.45ixeulci.webp)
+
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.4xudtjf616.webp)
+
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.231pnqz4rd.webp)
+
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.6bgwxkp44z.webp)
+
